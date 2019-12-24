@@ -1,0 +1,30 @@
+.lists{
+  height: calc(100vh - 80px);
+  width: calc(100vw - 1200px);
+  background-color: #D7EEFF;
+  flex-direction: column;
+  font-size: 20px;
+  font-family: fantasy;
+    &__category{
+      text-decoration: none;
+      display: block;
+      color: black;
+      margin: 50px 0;
+
+    }
+    &__ranking{
+      text-decoration: none;
+      display: block;
+      color: black;
+      margin: 50px 0;
+
+    }
+    &__director{
+      text-decoration: none;
+      display: block;
+      color: black;
+      margin: 50px 0;
+
+    }
+
+}

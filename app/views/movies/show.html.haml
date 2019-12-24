@@ -1,0 +1,15 @@
+.content2
+  = image_tag "#{@movie.image}", class: "content2__image"
+  .lower-content
+    .lower-content__title
+      タイトル
+      = @movie.title
+    .lower-content__director
+      監督
+      = @movie.director
+    .lower-content__category
+      ジャンル
+      = @movie.category
+    .lower-content__detail
+      映画詳細
+      = @movie.detail

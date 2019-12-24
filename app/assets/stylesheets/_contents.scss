@@ -1,0 +1,31 @@
+.contents{
+  height: calc(100vh - 80px);
+  width: 1200px;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+
+    .content{
+      width: 240px;
+      height: 320px;
+      background-color: white;
+      margin: 20px 0;
+      text-align: center;
+      text-decoration: none;      
+        &__image{
+          margin: 0 20px;
+          width: 200px;
+          height: 260px;
+        }
+        &__title{
+          font-size: 20px;
+          color: black;
+          
+        }
+
+
+    }
+
+}
+

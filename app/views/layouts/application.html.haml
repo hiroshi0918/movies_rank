@@ -1,0 +1,18 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title MoviesRank
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+  .header
+    = link_to "MoviesRank", root_path, class: "title"
+    %form.form{ action: "/"}
+      %input.sbox{type: "text", placeholder: "キーワードを入力してください"}
+      %butto.sbtn{type: "submit"}
+    .header__right
+      = link_to "新規投稿", '/movies/new', class: "header__right--btn"
+  = yield

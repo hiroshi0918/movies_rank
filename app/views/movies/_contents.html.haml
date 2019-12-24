@@ -1,0 +1,6 @@
+.contents
+  - @movies.each do |movie|
+    = link_to    "/movies/#{movie.id}", class: "content" do
+      = image_tag "#{movie.image}", class: "content__image"
+      .content__title
+        = movie.title

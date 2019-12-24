@@ -1,0 +1,62 @@
+.content-row{
+  padding: 100px;
+  .container{
+
+    &--name{
+      width: 300px;
+      height: 60px;
+      display: block;
+      margin-top: 30px;
+      border: ridge;
+      font-size: large;
+    }
+    &--director{
+      width: 300px;
+      height: 60px;
+      display: block;
+      margin-top: 30px;
+      border: ridge;
+      font-size: large;
+
+    }
+    &--image{
+      width: 400px;
+      height: 40px;
+      display: block;
+      margin-top: 30px;
+      border: ridge;
+      font-size: large;
+    }
+    &--detail{
+      width: 500px;
+      height: 300px;
+      display: block;
+      margin-top: 30px;
+      border: ridge;
+      border-style: ridge;
+    }
+    &--category{
+      width: 300px;
+      height: 60px;
+      display: block;
+      margin-top: 30px;
+      border: ridge;
+      font-size: large;
+    }
+    &--btn{
+      margin-top: 30px;
+      display: inline-block;
+      padding: 0.5em 1em;
+      text-decoration: none;
+      background: #668ad8;/*ボタン色*/
+      color: #FFF;
+      border-bottom: solid 4px #627295;
+      border-radius: 3px;
+    }
+    &--btn:active{
+      -webkit-transform: translateY(4px);
+      transform: translateY(4px);/*下に動く*/
+      border-bottom: none;/*線を消す*/
+    }
+  }
+}

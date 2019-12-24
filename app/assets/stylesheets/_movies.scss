@@ -1,0 +1,74 @@
+* {
+  box-sizing: border-box;
+}
+
+.header{
+  height: 80px;
+  width: 100vw;
+  background-color: #CC3333;
+  position: fixed;
+  display: flex;
+  justify-content: space-evenly;
+ 
+    &__right{
+      border: round($number: 0);
+      width: 100px;
+      line-height: 50px;
+      padding: auto;
+      &--btn{
+        text-decoration: none;
+        color: black;
+        font-style: fantasy;
+
+      }
+    }
+    .title{
+      color: azure;
+      font-size: 30px;
+      text-decoration: none;
+      font-family: fantasy;
+      margin-top: 25px;
+      display: block;
+    }
+    .form{
+      position:relative;
+      max-width:300px;	
+      margin-bottom:20px;
+      }
+      .sbox{
+      height:50px;
+      width: 200px;
+      padding:0 10px; 
+      position:absolute; 
+      left:0;
+      top:0; 
+      border-radius:25px;
+      outline:0;
+      background:#eee;
+      }
+      .sbtn{
+      height:50px;
+      width:50px;	
+      position:absolute; 
+      left:150px; 
+      top:0;
+      background:#7fbfff;
+      color:#fff;
+      border:none;
+      border-radius:0 25px 25px 0;
+      }
+      #sbtn4 .fa-search{
+      font-size:20px;	
+      position:absolute;
+      top:30%;
+      left:30%;	
+      }
+      #sbtn4:hover{
+      color:#888;
+      }
+
+}
+.wrapper{
+  display: flex;
+  padding-top: 80px;
+}

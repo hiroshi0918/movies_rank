@@ -12,11 +12,11 @@
 ## moviesテーブル
 |Column|Type|Options|
 |------|----|-------|
-|title|text|null: false,unique: true|
+|title|string|null: false,unique: true|
 |derector|string|null: false|
-|user_id|integer|null: false, foreign_key: true|
+|detail|text||
 |category|string|null:false|
-|image|string|null:false|
+|image|text|null:false|
 ### Association
 - belongs_to :user
 - has_many :comments

@@ -21,4 +21,8 @@
       - else
         = link_to "ログイン", new_user_session_path, class: "header__right--btn"
         = link_to "新規登録", new_view_registration_path, class: "header__right--btn"
+  .lists
+    = link_to "ジャンル", root_path, class: "lists__category"
+    = link_to "ランキング", rank_movies_path, class: "lists__ranking"
+    = link_to "監督一覧", root_path, class: "lists__director"
   = yield

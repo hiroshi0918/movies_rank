@@ -10,9 +10,15 @@
   %body
   .header
     = link_to "MoviesRank", root_path, class: "title"
-    %form.form{ action: "/"}
-      %input.sbox{type: "text", placeholder: "キーワードを入力してください"}
-      %butto.sbtn{type: "submit"}
+    = form_with(url: search_movies_path, local: true, method: :get, class: "form") do |form| 
+      = form.text_field :keyword, placeholder: "映画を検索する", class: "sbox" 
+      = form.submit "検索", class: "sbtn"  
     .header__right
-      = link_to "新規投稿", '/movies/new', class: "header__right--btn"
+      - if user_signed_in?
+        = link_to current_user.nickname, user_path(current_user), class: "header__right--btn"
+        = link_to "新規投稿", '/movies/new', class: "header__right--btn"
+        = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "header__right--btn"
+      - else
+        = link_to "ログイン", new_user_session_path, class: "header__right--btn"
+        = link_to "新規登録", new_view_registration_path, class: "header__right--btn"
   = yield

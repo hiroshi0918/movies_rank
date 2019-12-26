@@ -1,0 +1,5 @@
+.wrapper
+  .contents
+    - @movies.each do |movie|
+      = render partial: "contents", locals: { movie: movie }
+  = render "lists"

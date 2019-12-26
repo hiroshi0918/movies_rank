@@ -1,0 +1,26 @@
+.movieTitle{
+  padding-top: 100px;
+}
+.content3{
+  margin-top: 30px;
+  padding: 10px auto;
+  border: groove;
+  &__right{
+    &__top{
+      &--title{
+        text-decoration: none;
+        color: black;
+        font-family: fantasy;
+        font-size: large;
+      }
+    }
+    &__bottom{
+      &--userName{
+        &--btn{
+          text-decoration: none;
+          color: black;
+        }
+      }}}}
+.LikedMovies{
+  padding-top: 30px;
+}

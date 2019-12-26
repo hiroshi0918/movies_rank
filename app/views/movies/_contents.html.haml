@@ -1,6 +1,7 @@
-.contents
-  - @movies.each do |movie|
-    = link_to    "/movies/#{movie.id}", class: "content" do
-      = image_tag "#{movie.image}", class: "content__image"
-      .content__title
-        = movie.title
+= link_to    "/movies/#{movie.id}", class: "content" do
+  = image_tag "#{movie.image}", class: "content__image"
+  .content__title
+    = movie.title
+  .content__like
+    いいね：
+    = movie.liked_users.count

@@ -1,5 +1,6 @@
 .content2{
   padding-top: 130px;
+  width: 1200px;
 
   &__image{
     height: 400px;
@@ -12,17 +13,29 @@
     font-family: "游ゴシック体", YuGothic;
     font-size: larger;
     &__title{
-
-      
+      margin-top: 30px;
+      border: ridge;
+      margin: 30px 300px 0 300px;
     }
     &__director{
+      margin-top: 30px;
+      border: ridge;
+      margin: 30px 300px 0 300px;
 
     }
     &__category{
+      margin-top: 30px;
+      border: ridge;
+      margin: 30px 300px 0 300px;
 
     }
     &__detail{
-
+      margin-top: 30px;
+      border: ridge;
+      margin: 30px 150px 0 150px;
+    }
+    &__video{
+      margin: 30px 150px 0 150px
     }
 
   }

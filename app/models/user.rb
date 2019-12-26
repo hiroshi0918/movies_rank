@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :movies
   has_many :comments
-  has_many :likes
+  has_many :likes, dependent: :destroy
   has_many :liked_movies, through: :likes, source: :movie
   def already_liked?(movie)
     self.likes.exists?(movie_id: movie.id)

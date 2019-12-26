@@ -24,19 +24,22 @@
         = @movie.detail
       .lower-content__video
         %iframe#player{width: "560", height: "300", src: "https://www.youtube.com/embed/WwuXGsTOr54", frameborder: "0", allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"}
-    .chat-form
-      - if current_user
-        =form_with(model: [@movie, @comment], local: true) do |form|
-          =form.text_area :text, placeholder: "コメントする", rows: "2"
-          =form.submit "SEND"
-      - else
-        %strong
-        %p ※※※ コメントの投稿には新規登録/ログインが必要です ※※※
-    .comments
-      %p＜レビュー＞
-      - if @comments
-        - @comments.each do |comment|
-          = comment.text
+    
+      .chat-form
+        - if current_user
+          =form_with(model: [@movie, @comment], local: true) do |form|
+            =form.text_area :text, placeholder: "コメントする", rows: "2"
+            =form.submit "SEND"
+        - else
+          %strong
+          %p ※※※ コメントの投稿には新規登録/ログインが必要です ※※※
+      .comments
+        %p＜レビュー＞
+        - if @comments
+          - @comments.each do |comment|
+            = comment.user.nickname
+            = comment.text
+            %br
 
         
   = render "lists"

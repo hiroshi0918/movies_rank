@@ -27,7 +27,7 @@
   
     .chat-form
       - if current_user
-        =form_with(model: [@movie, @comment], local: true) do |form|
+        =form_with(model: [@movie, @comment], local: true, id: "new-comment") do |form|
           =form.text_area :text, placeholder: "コメントする", rows: "2", class: "chat-form--box"
           =form.submit "投稿", class: "chat-form--btn"
       - else

@@ -1,6 +1,35 @@
 .content2{
   padding-top: 130px;
   width: 1200px;
+  &--btns{
+    text-align: center;
+    margin-bottom: 10px;
+    .edit-btn{
+      display: inline-block;
+      padding: 0.3em 1em;
+      text-decoration: none;
+      color: #67c5ff;
+      border: solid 2px #67c5ff;
+      border-radius: 3px;
+      transition: .4s;
+    }
+    .edit-btn:hover{
+      background: #67c5ff;
+      color: white;
+    }
+    .destroy-btn{
+      display: inline-block;
+      padding: 0.3em 1em;
+      text-decoration: none;
+      color: #ffcccc;
+      border: solid 2px #ffcccc;
+      border-radius: 3px;
+      transition: .4s;
+    }
+    .destroy-btn:hover{
+      background: #ffcccc;
+      color: white;
+    }}
 
   &__image{
     height: 400px;
@@ -41,6 +70,21 @@
 .chat-form{
   margin-top: 30px;
   padding: 0　auto 0;
+  position: relative;
+	width: 80%;
+  margin: 40px 3%;
+  &--box{
+    width: 300px;
+    height: 50px;
+  }
+  &--btn{
+    font-family: fantasy;
+    display: inline-block;
+    width: 180px;
+    height:50px;
+
+  }
+
 }
 .comments{
   margin-top: 30px;

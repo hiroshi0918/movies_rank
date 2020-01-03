@@ -8,7 +8,11 @@ class MoviesController < ApplicationController
   end
 
   def create
-    Movie.create(movie_params)
+    @movie = Movie.new(movie_params)
+    url = params[:movie][:youtube_url]
+    url = url.last(11)
+    @movie.youtube_url = url
+    @movie.save
     redirect_to root_path
   end
 
@@ -39,9 +43,13 @@ class MoviesController < ApplicationController
     @movies = Movie.search(params[:keyword])
   end
 
+  def rank
+    @all_ranks = Movie.create_all_ranks
+  end
+
 
   private
   def movie_params
-    params.require(:movie).permit(:title,:director, :category, :image, :detail).merge(user_id: current_user.id)
+    params.require(:movie).permit(:title, :director, :category, :image, :detail, :youtube_url).merge(user_id: current_user.id)
   end
 end

@@ -1,4 +1,6 @@
 .contents
-  - @movies.each do |movie|
+  - @all_ranks.each.with_index do |movie,i|
+    = i+1
+    位
     = render partial: "contents", locals: { movie: movie }
-
+  

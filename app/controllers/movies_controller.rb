@@ -41,6 +41,10 @@ class MoviesController < ApplicationController
 
   def search
     @movies = Movie.search(params[:keyword])
+    respond_to do |format|
+      format.html
+      format.json{render action: :search}
+    end
   end
 
   def rank

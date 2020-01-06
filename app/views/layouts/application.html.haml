@@ -10,7 +10,7 @@
   %body
   .header
     = link_to "MoviesRank", root_path, class: "title"
-    = form_with(url: search_movies_path, local: true, method: :get, class: "form") do |form| 
+    = form_with(url: search_movies_path, local: true, method: :get, class: "search-form") do |form| 
       = form.text_field :keyword, placeholder: "映画を検索する", class: "sbox" 
       = form.submit "検索", class: "sbtn"  
     .header__right

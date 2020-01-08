@@ -1,4 +1,5 @@
 .contents
   - @movies.each do |movie|
     = render partial: "contents", locals: { movie: movie }
+  = paginate(@movies)
 

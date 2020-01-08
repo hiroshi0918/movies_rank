@@ -1,9 +1,29 @@
 .content2{
-  padding-top: 130px;
-  width: 1200px;
-  &--btns{
-    text-align: center;
-    margin-bottom: 10px;
+  border: 4px solid #82636b;
+  border-radius: 240px 15px 185px 15px / 15px 200px 15px 185px;
+  padding: 2em;
+  position: relative;
+  top: 130px;
+  margin: 0 300px 0 150px;
+  width: 900px;
+  height: 600px;
+  display: flex;
+  &--title{
+
+  }
+
+  .left-content{
+    width: 400px;
+    height: 600px;
+    &__image{
+      height: 400px;
+      width: 300px;
+      margin: 0 auto;
+      display: block;
+    }
+    &--btns{
+      text-align: center;
+      margin-bottom: 10px;
     .edit-btn{
       display: inline-block;
       padding: 0.3em 1em;
@@ -12,11 +32,11 @@
       border: solid 2px #67c5ff;
       border-radius: 3px;
       transition: .4s;
-    }
+  }
     .edit-btn:hover{
       background: #67c5ff;
       color: white;
-    }
+  }
     .destroy-btn{
       display: inline-block;
       padding: 0.3em 1em;
@@ -25,68 +45,113 @@
       border: solid 2px #ffcccc;
       border-radius: 3px;
       transition: .4s;
-    }
+  }
     .destroy-btn:hover{
       background: #ffcccc;
       color: white;
     }}
-
-  &__image{
-    height: 400px;
-    width: 300px;
-    margin: 0 auto;
-    display: block;
-  }
-  .lower-content{
-    text-align: center;
+    &--likes{
+      display: block;
+      width: 150px;
+      height: 30px;
+      align-items: center;
+      margin: 0 auto;
+    }
+}
+  .right-content{
     font-family: "游ゴシック体", YuGothic;
     font-size: larger;
+    width: 300px;
     &__title{
-      margin-top: 30px;
-      border: ridge;
-      margin: 30px 300px 0 300px;
+      display: inline-block;
+      background: linear-gradient(transparent 50%, #DDDDDD 60%);
+      font-size: 40px;
+      font-family: fantasy;
     }
-    &__director{
-      margin-top: 30px;
-      border: ridge;
-      margin: 30px 300px 0 300px;
-
-    }
-    &__category{
-      margin-top: 30px;
-      border: ridge;
-      margin: 30px 300px 0 300px;
-
-    }
+    &__middle{
+      margin-top: 10px;
+      &__info{
+        display: inline-block;
+        font-size: 12px;
+      }
+      &__director{
+        display: inline-block;
+        font-size: small;
+        font-family: fantasy;
+        background: linear-gradient(transparent 50%, #DDDDDD 60%);
+      }
+      &__category{
+        display: inline-block;
+        font-size: small;
+        font-family: fantasy;
+        background: linear-gradient(transparent 50%, #DDDDDD 60%);
+      }}
     &__detail{
-      margin-top: 30px;
-      border: ridge;
-      margin: 30px 150px 0 150px;
-    }
+      margin: 20px 0;
+      &__info{
+        display: inline-block;
+        font-size: 12px;
+      }
+      &__input{
+        font-size: small;
+        font-family: fantasy;
+        width: 400px;
+        height: 100px;
+        overflow: scroll;
+        position: relative;
+        padding: 0.5em 1em;
+        border: double 3px black;
+    }}
     &__video{
-      margin: 30px 150px 0 150px
     }
 }}
-.chat-form{
-  margin-top: 30px;
-  padding: 0　auto 0;
-  position: relative;
-	width: 80%;
-  margin: 40px 3%;
-  &--box{
-    width: 300px;
-    height: 50px;
-  }
-  &--btn{
-    font-family: fantasy;
-    display: inline-block;
-    width: 180px;
-    height:50px;
+.chat-space{
+  width: 900px;
 
-  }
-
-}
-.comments{
-  margin-top: 30px;
-  padding: 0　auto 0;
+  .chat-form{
+    margin-top: 30px;
+    padding: 0　auto 0;
+    position: relative;
+    top: 100px;
+    width: 600px;
+    margin: 0 auto;
+    #new-comment{
+      .chat-form--box{
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 80px;
+      }
+      .chat-form--btn{
+        font-family: fantasy;
+        display: block;
+        width: 180px;
+        height:50px;
+        margin-top: 20px;
+        background-color: #57C3E9;
+        border-radius: 20px;
+        color: #fff;
+        border: 0;
+        font-size: 18px;
+    }}}
+  .comments{
+    padding: 0　auto 0;
+    position: relative;
+    top: 100px;
+    width: 600px;
+    margin: 30px auto 0;
+    &__para{
+      display: block;
+      margin-top: 10px;
+      &__talker{
+        display: inline-block;
+        font-size: 15px;
+        color: darkgoldenrod;
+      }
+      &__text{
+        display: inline-block;
+    }}
+  }}
+a{
+  text-decoration: none;
 }

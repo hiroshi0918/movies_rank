@@ -35,12 +35,11 @@ $(function() {
       }
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
-      // 通信失敗時の処理
-      alert('ファイルの取得に失敗しました。');
+      alert('error');
       console.log("ajax通信に失敗しました");
-      console.log("jqXHR          : " + jqXHR.status); // HTTPステータスが取得
-      console.log("textStatus     : " + textStatus);    // タイムアウト、パースエラー
-      console.log("errorThrown    : " + errorThrown.message); // 例外情報
+      console.log("jqXHR          : " + jqXHR.status);
+      console.log("textStatus     : " + textStatus);
+      console.log("errorThrown    : " + errorThrown.message);
       console.log("URL            : " + url);
 });
   });

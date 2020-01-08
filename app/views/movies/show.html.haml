@@ -1,42 +1,53 @@
 .content2
-  .content2--btns
-    =link_to "編集", edit_movie_path(@movie.id), class: "edit-btn"
-    =link_to "削除", movie_path(@movie.id), method: :delete, class: "destroy-btn"
-  = image_tag "#{@movie.image}", class: "content2__image"
-  .lower-content
-    いいね数:
-    = @movie.likes.count
-    - if current_user.already_liked?(@movie)
-      = button_to 'いいねを取り消す', movie_like_path(@movie), method: :delete
-    - else
-      = button_to 'いいね' , movie_likes_path(@movie)
-    .lower-content__title
-      タイトル:
-      = @movie.title
-    .lower-content__director
-      監督:
-      = @movie.director
-    .lower-content__category
-      ジャンル:
-      = @movie.category
-    .lower-content__detail
-      映画詳細:
-      = @movie.detail
-    .lower-content__video
-      %iframe(width="560" height="315" src="https://www.youtube.com/embed/#{@movie.youtube_url}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-  
-    .chat-form
-      - if current_user
-        =form_with(model: [@movie, @comment], local: true, id: "new-comment") do |form|
-          =form.text_area :text, placeholder: "コメントする", rows: "2", class: "chat-form--box"
-          =form.submit "投稿", class: "chat-form--btn"
+  .left-content
+    = image_tag "#{@movie.image}", class: "left-content__image"
+    .left-content--btns
+      =link_to "編集", edit_movie_path(@movie.id), class: "edit-btn"
+      =link_to "削除", movie_path(@movie.id), method: :delete, class: "destroy-btn"
+    .left-content--likes
+      - if current_user.already_liked?(@movie)
+        = link_to movie_like_path(@movie), method: :delete, class: "left-content-likes--btn" do
+          %i.fas.fa-thumbs-up いいね！
+          = @movie.likes.count
       - else
-        %strong
-        %p ※※※ コメントの投稿には新規登録/ログインが必要です ※※※
-    .comments
-      %p＜レビュー＞
-      - if @comments
-        - @comments.each do |comment|
-          = comment.user.nickname
-          = comment.text
-          %br
+        = link_to movie_likes_path(@movie), method: :post, class: "left-content-likes--btn" do
+          %i.fas.fa-thumbs-up いいね！
+          = @movie.likes.count
+  .right-content
+    .right-content__title
+      = @movie.title
+    .right-content__middle
+      .right-content__middle__info
+        監督:
+      .right-content__middle__director
+        = @movie.director
+      .right-content__middle__info
+        ジャンル:
+      .right-content__middle__category
+        = @movie.category
+    .right-content__detail
+      .right-content__detail__info
+        あらすじ
+      .right-content__detail__input
+        = @movie.detail
+    .right-content__video
+      %iframe(width="400" height="280" src="https://www.youtube.com/embed/#{@movie.youtube_url}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+.chat-space
+  .chat-form
+    - if current_user
+      =form_with(model: [@movie, @comment], local: true, id: "new-comment") do |form|
+        =form.text_area :text, placeholder: "コメントする", rows: "2", class: "chat-form--box"
+        =form.submit "投稿", class: "chat-form--btn"
+    - else
+      %strong
+      %p ※※※ コメントの投稿には新規登録/ログインが必要です ※※※
+  .comments
+    %p＜レビュー一覧＞
+    - if @comments
+      - @comments.each do |comment|
+        .comments__para
+          .comments__para__talker
+            = comment.user.nickname
+          .comments__para__text
+            = comment.text
+            %br

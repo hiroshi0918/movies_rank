@@ -9,6 +9,7 @@
   position: fixed;
   display: flex;
   justify-content: space-evenly;
+  z-index: 1;
  
     &__right{
       border: round($number: 0);

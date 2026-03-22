@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on('turbo:load', function() {
   function buildCommentElement(comment) {
     var $paragraph = $('<p>');
 

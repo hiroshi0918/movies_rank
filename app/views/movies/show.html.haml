@@ -4,15 +4,15 @@
     - if user_signed_in? && current_user == @movie.user
       .left-content--btns
         = link_to "編集", edit_movie_path(@movie.id), class: "edit-btn"
-        = link_to "削除", movie_path(@movie.id), method: :delete, class: "destroy-btn", data: { confirm: "この投稿を削除しますか？" }
+        = link_to "削除", movie_path(@movie.id), class: "destroy-btn", data: { turbo_method: :delete, turbo_confirm: "この投稿を削除しますか？" }
     .left-content--likes
       - if user_signed_in?
         - if current_user.already_liked?(@movie)
-          = link_to movie_like_path(@movie), method: :delete, class: "left-content-likes--btn" do
+          = link_to movie_like_path(@movie), class: "left-content-likes--btn", data: { turbo_method: :delete } do
             %i.fas.fa-thumbs-up いいね！
             = @movie.likes_total
         - else
-          = link_to movie_like_path(@movie), method: :post, class: "left-content-likes--btn" do
+          = link_to movie_like_path(@movie), class: "left-content-likes--btn", data: { turbo_method: :post } do
             %i.fas.fa-thumbs-up いいね！
             = @movie.likes_total
       - else

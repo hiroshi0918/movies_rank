@@ -3,7 +3,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
 
-  process resize_to_fit: [300, 250]
+  process :resize_for_display, if: :image_processing_available?
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -30,6 +30,10 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
+  def resize_for_display
+    resize_to_fit(300, 250)
+  end
+
   # Create different versions of your uploaded files:
   # version :thumb do
   #   process resize_to_fit: [50, 50]
@@ -46,4 +50,20 @@ class ImageUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+
+  def image_processing_available?(*)
+    return true if self.class.image_processing_command
+
+    Rails.logger.warn(
+      "Skipping image resize because ImageMagick is not installed. " \
+      "Install `imagemagick` to enable upload resizing."
+    )
+    false
+  end
+
+  def self.image_processing_command
+    @image_processing_command ||= begin
+      MiniMagick::Utilities.which("magick") || MiniMagick::Utilities.which("convert")
+    end
+  end
 end

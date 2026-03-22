@@ -1,28 +1,32 @@
-<div class="contents row">
-  <div class="container">
-    <h2>Log in</h2>
+<div class="auth-page">
+  <div class="auth-form">
+    <h2 class="auth-form__title">ログイン</h2>
 
     <%= form_with model: @user, url: user_session_path, id: 'new_user', class: 'new_user', local: true do |f| %>
       <div class="field">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true %>
+        <%= f.label :email, "メールアドレス" %>
+        <%= f.email_field :email, autofocus: true, placeholder: "example@email.com" %>
       </div>
 
       <div class="field">
-        <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "off" %>
+        <%= f.label :password, "パスワード" %>
+        <%= f.password_field :password, autocomplete: "off", placeholder: "パスワードを入力" %>
       </div>
 
       <% if devise_mapping.rememberable? %>
-        <div class="field">
-          <%= f.label :remember_me %><br />
+        <div class="remember-me">
           <%= f.check_box :remember_me %>
+          <%= f.label :remember_me, "ログイン状態を保持する" %>
         </div>
       <% end -%>
 
       <div class="actions">
-        <%= f.submit "Log in" %>
+        <%= f.submit "ログイン" %>
       </div>
     <% end %>
+
+    <div class="auth-links">
+      <%= link_to "初めてですか？新規登録", new_user_registration_path %>
+    </div>
   </div>
 </div>

@@ -1,19 +1,33 @@
-.movieTitle
-  = @user.nickname
-  さんの投稿一覧
-.content3
-  - @movies.each do |movie|
-    .content3__left
-      .content3__left--image
-    .content3__right
-      .content3__right__top
-        = link_to movie.title, movie_path(movie.id), class: "content3__right__top--title"
-      -# .content3__right__bottom
-      -#   .content3__right__bottom--userName
-      -#     = link_to movie.user.nickname, user_path(movie.user), class: "content3.content3__right__bottom--userName--btn"
-.LikedMovies
-  %h3いいねしている投稿 
-  - @user.liked_movies.each do |movie|
-    = movie.director
-    = movie.title
-    %br
+.profile-page
+  .profile-header
+    .profile-header__avatar= @user.nickname[0]
+    .profile-header__info
+      %h1.profile-header__name= @user.nickname
+      %p.profile-header__sub メンバー
+
+  .profile-section
+    %h2.profile-section__title
+      = "#{@user.nickname}さんの投稿"
+    - if @movies.present?
+      .profile-section__grid
+        - @movies.each do |movie|
+          = link_to movie_path(movie), class: "profile-movie-card" do
+            = image_tag movie.image_url, class: "profile-movie-card__image", alt: movie.title
+            .profile-movie-card__overlay
+              .profile-movie-card__title= movie.title
+              .profile-movie-card__meta= movie.category
+    - else
+      %p.profile-section__empty まだ投稿がありません
+
+  .profile-section
+    %h2.profile-section__title いいねした映画
+    - if @user.liked_movies.present?
+      .profile-section__grid
+        - @user.liked_movies.each do |movie|
+          = link_to movie_path(movie), class: "profile-movie-card" do
+            = image_tag movie.image_url, class: "profile-movie-card__image", alt: movie.title
+            .profile-movie-card__overlay
+              .profile-movie-card__title= movie.title
+              .profile-movie-card__meta= movie.category
+    - else
+      %p.profile-section__empty まだいいねがありません

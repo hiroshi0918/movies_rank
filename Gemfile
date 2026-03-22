@@ -35,3 +35,5 @@ group :test do
   gem "capybara", ">= 3.40"
   gem "selenium-webdriver", ">= 4.41"
 end
+
+gem "dotenv-rails", "~> 3.2", groups: [:development, :test]

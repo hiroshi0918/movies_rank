@@ -1,11 +1,11 @@
 class Movie < ApplicationRecord
-  mount_uploader :image, ImageUploader
+  has_one_attached :image
 
   def image_url(*args)
-    if self[:image].present? && self[:image].to_s.start_with?('http')
+    if image.attached?
+      Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true)
+    elsif self[:image].present? && self[:image].to_s.start_with?('http')
       self[:image]
-    elsif self[:image].present?
-      super
     else
       "https://via.placeholder.com/300x450/333333/ffffff?text=No+Poster"
     end

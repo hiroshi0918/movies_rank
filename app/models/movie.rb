@@ -1,5 +1,15 @@
 class Movie < ApplicationRecord
   mount_uploader :image, ImageUploader
+
+  def image_url(*args)
+    if self[:image].present? && self[:image].to_s.start_with?('http')
+      self[:image]
+    elsif self[:image].present?
+      super
+    else
+      "https://via.placeholder.com/300x450/333333/ffffff?text=No+Poster"
+    end
+  end
   
   belongs_to :user
   has_many :comments, dependent: :destroy

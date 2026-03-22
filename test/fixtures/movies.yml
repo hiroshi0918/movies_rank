@@ -1,11 +1,17 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+one:
+  title: Inception
+  director: Christopher Nolan
+  category: SF
+  image: inception.jpg
+  detail: Dream within a dream.
+  user: one
+  youtube_url: dQw4w9WgXcQ
 
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-# column: value
+two:
+  title: Interstellar
+  director: Christopher Nolan
+  category: SF
+  image: interstellar.jpg
+  detail: Space exploration.
+  user: two
+  youtube_url: 5NV6Rdv1a3I

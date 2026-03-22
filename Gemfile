@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
+ruby '2.6.10'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.1'
@@ -65,6 +65,8 @@ gem 'font-awesome-sass'
 gem 'pry-rails'
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'ffi', '1.17.0'
+gem 'mimemagic', '0.3.10'
 gem 'devise'
 gem 'jquery-rails'
 gem 'kaminari'

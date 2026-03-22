@@ -28,6 +28,10 @@ Rails.application.configure do
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
 
+  # Rails 5.2 + current OpenSSL on macOS can fail when writing GCM-encrypted
+  # session cookies during integration tests.
+  config.action_dispatch.use_authenticated_cookie_encryption = false
+
   # Store uploaded files on the local file system in a temporary directory
   config.active_storage.service = :test
 

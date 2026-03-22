@@ -1,185 +1,181 @@
-# MoviesRank
+# 🎬 MoviesRank
 
-MoviesRankは、気に入った映画を投稿して共有できるRailsアプリです。  
-映画の一覧表示、検索、いいね数によるランキング、レビューコメントなどを通じて、ユーザー同士で映画を見つけやすくすることを目的としています。
+[![Ruby](https://img.shields.io/badge/Ruby-3.4.7-CC342D?logo=ruby&logoColor=white)](https://www.ruby-lang.org/)
+[![Rails](https://img.shields.io/badge/Rails-8.1.2-CC0000?logo=rubyonrails&logoColor=white)](https://rubyonrails.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)
 
-## できること
+**MoviesRank**（ムービーズランク）は、あなたのお気に入りの映画を投稿し、みんなで共有できるRailsアプリケーションです。
+映画の一覧表示や検索、いいね数によるランキング機能、レビューコメントなどを通じて、**「次に見るべき素晴らしい映画」**をユーザー同士で見つけやすくすることを目的としています。
 
-- 映画の投稿
-  - タイトル、監督名、ジャンル、あらすじ、画像、YouTube URLを登録できます。
-- 映画の一覧表示
-  - 投稿された映画をトップページで一覧表示します。
-- 映画検索
-  - タイトル名で映画を検索できます。
-- いいね機能
-  - 気に入った映画にいいねできます。
-- ランキング表示
-  - いいね数の多い映画をランキング形式で確認できます。
-- コメント機能
-  - 映画詳細ページでレビューや感想を投稿できます。
-- マイページ
-  - ユーザーごとの投稿一覧と、いいねした映画を確認できます。
+---
 
-## 画面イメージ
+## 📑 もくじ
+- [✨ 主な機能](#-主な機能)
+- [💻 画面イメージ](#-画面イメージ)
+- [🛠 使用技術](#-使用技術)
+- [🚀 セットアップ手順](#-セットアップ手順)
+- [📖 使い方](#-使い方)
+- [🗄 データベース設計](#-データベース設計)
+- [📝 補足・仕様](#-補足仕様)
 
-- トップページ
-  - 投稿された映画がカード形式で並びます。
-- 映画詳細ページ
-  - 映画情報、あらすじ、YouTube埋め込み動画、コメント、いいね操作を確認できます。
-- ランキングページ
-  - いいね数の多い映画を上位から表示します。
-- マイページ
-  - 自分の投稿一覧と、いいねした映画を表示します。
+---
 
-## 使用技術
+## ✨ 主な機能
 
-- Ruby 3.4.7
-- Rails 8.1.2
-- MySQL
-- Haml
-- SCSS
-- JavaScript / jQuery / Turbo
-- Devise
-- CarrierWave
-- MiniMagick
-- Kaminari
+- **🎬 映画の投稿**
+  - タイトル、監督名、ジャンル、あらすじ、ポスター画像、YouTube予告編URLを登録できます。
+- **📋 映画の一覧表示**
+  - 投稿された映画をトップページで魅力的なカード形式で一覧表示します。
+- **🔍 映画検索**
+  - 気になる映画をタイトル名でサクッと検索できます。
+- **❤️ いいね機能**
+  - 気に入った映画、見たい映画に「いいね」をしてストックできます。
+- **👑 ランキング表示**
+  - みんなの「いいね数」が多い映画をランキング形式で確認でき、人気のトレンドがわかります。
+- **💬 コメント機能**
+  - 映画詳細ページで、アツいレビューや感想を投稿・共有できます。
+- **👤 マイページ**
+  - 自分の投稿履歴や、これまでに「いいね」した映画を一覧で振り返ることができます。
 
-## 主なモデル
+---
 
-### User
+## 💻 画面イメージ
 
-- 映画の投稿
-- コメント投稿
-- いいね
+| ページ | 概要 |
+| --- | --- |
+| **トップページ** | 投稿された映画が美しいカード形式で並び、最新の映画と出会えます。 |
+| **映画詳細ページ**| 映画の基本情報、あらすじ、YouTube予告編動画、みんなのコメント、いいね操作が1画面にまとまっています。 |
+| **ランキング** | サイト内で人気の映画が順位とともに表示されます。 |
+| **マイページ** | 自分だけの映画リスト（投稿・いいね済）を管理できます。 |
 
-### Movie
+---
 
-- 映画情報の登録
-- コメントの紐付け
-- いいねの集計
-- タイトル検索
-- いいねランキング生成
+## 🛠 使用技術
 
-### Comment
+### バックエンド・データベース
+- **Ruby** 3.4.7
+- **Ruby on Rails** 8.1.2
+- **MySQL**
 
-- ユーザーが映画に対して感想を投稿
+### フロントエンド
+- **Haml** / **SCSS**
+- **JavaScript** / **jQuery** / **Turbo**
 
-### Like
+### 主要Gem
+- **Devise** (ユーザー認証)
+- **CarrierWave** / **MiniMagick** (画像アップロード・処理)
+- **Kaminari** (ページネーション)
 
-- ユーザーごとのいいね管理
-- 同じ映画への重複いいねを防止
+---
 
-## セットアップ
+## 🚀 セットアップ手順
 
-### 前提
+開発環境を構築するための手順です。
 
+### 📌 前提条件
 - Ruby 3.4.7
 - Bundler 2.7.x
 - MySQL
-- ImageMagick
+- ImageMagick (画像リサイズに必要)
 
-### インストール手順
+### 📥 インストール
 
-1. リポジトリを取得します。
+1. **リポジトリのクローン**
+   ```bash
+   git clone <repository-url>
+   cd movies_rank
+   ```
 
-```bash
-git clone <repository-url>
-cd movies_rank
-```
+2. **Gemのインストール**
+   ```bash
+   bundle install
+   ```
 
-2. gemをインストールします。
+3. **環境変数の設定**
+   `.env.example` などの設定ファイルを参考に、実行環境に合わせて以下の環境変数を設定してください。
+   - `MYSQL_USERNAME`
+   - `MYSQL_PASSWORD`
+   - `MYSQL_HOST`
+   - `MYSQL_PORT`
 
-```bash
-bundle install
-```
+4. **データベースの作成とマイグレーション**
+   ```bash
+   bundle exec rails db:prepare
+   ```
 
-3. MySQL接続用の環境変数を設定します。  
-`.env.example` を参考に、実行環境に合わせて `MYSQL_USERNAME` `MYSQL_PASSWORD` `MYSQL_HOST` `MYSQL_PORT` を設定してください。
+5. **サーバーの起動**
+   ```bash
+   bundle exec rails s
+   ```
 
-4. データベースを作成してマイグレーションを実行します。
+6. **ブラウザで確認**
+   以下のURLにアクセスして、画面が表示されれば成功です！
+   👉 `http://localhost:3000`
 
-```bash
-bundle exec rails db:prepare
-```
+---
 
-5. アプリを起動します。
+## 📖 使い方
 
-```bash
-bundle exec rails s
-```
+1. **ユーザー登録**：まずは新規登録（またはログイン）を行います。
+2. **映画を投稿**：「新規投稿」ボタンから、おすすめしたい映画の情報を登録します。
+3. **映画を探す**：トップページの新着一覧や、検索フォームから気になる映画を探します。
+4. **リアクションする**：映画詳細ページで「いいね」を押したり、熱いコメントを残しましょう！
+5. **トレンドをチェック**：ランキングページで、今みんなが注目している人気作品を確認します。
 
-6. ブラウザで以下にアクセスします。
+---
 
-```text
-http://localhost:3000
-```
+## 🗄 データベース設計
 
-## 使い方
+### テーブル構成（抜粋）
 
-1. 新規登録またはログインします。
-2. 「新規投稿」から映画情報を登録します。
-3. トップページで投稿された映画を確認します。
-4. 検索フォームから見たい映画を探します。
-5. 映画詳細ページでいいねやコメントを行います。
-6. ランキングページで人気作品を確認します。
+#### `users` (ユーザー)
+| カラム名 | データ型 | 概要 |
+| --- | --- | --- |
+| `email` | string | メールアドレス |
+| `encrypted_password` | string | パスワード |
+| `nickname` | string | ユーザー名 |
 
-## ルーティング概要
+#### `movies` (映画)
+| カラム名 | データ型 | 概要 |
+| --- | --- | --- |
+| `title` | string | タイトル |
+| `director` | string | 監督名 |
+| `category` | string | ジャンル |
+| `image` | string | ポスター画像URL |
+| `detail` | text | あらすじ・詳細 |
+| `youtube_url` | string | 予告編のYouTube URL |
+| `user_id` | bigint | 投稿ユーザーID |
+| `likes_count` | integer | いいね数（キャッシュ） |
 
-- `/`
-  - 映画一覧
-- `/movies/new`
-  - 新規映画投稿
-- `/movies/:id`
-  - 映画詳細
-- `/movies/search`
-  - 映画検索
-- `/movies/rank`
-  - ランキング
-- `/users/:id`
-  - マイページ
+#### `comments` (コメント)
+| カラム名 | データ型 | 概要 |
+| --- | --- | --- |
+| `user_id` | bigint | 投稿ユーザーID |
+| `movie_id` | bigint | 対象映画ID |
+| `text` | text | コメント本文 |
 
-## データ構成
+#### `likes` (いいね)
+| カラム名 | データ型 | 概要 |
+| --- | --- | --- |
+| `user_id` | bigint | いいねしたユーザーID |
+| `movie_id` | bigint | いいねされた映画ID |
 
-### users
+*(※ 同じ映画への重複いいねを防止するユニーク制約などが設定されています)*
 
-| Column | Type |
-| ------ | ---- |
-| email | string |
-| encrypted_password | string |
-| nickname | string |
+---
 
-### movies
+## 📝 補足・仕様
 
-| Column | Type |
-| ------ | ---- |
-| title | string |
-| director | string |
-| category | string |
-| image | string |
-| detail | text |
-| youtube_url | string |
-| user_id | bigint |
-| likes_count | integer |
-
-### comments
-
-| Column | Type |
-| ------ | ---- |
-| user_id | bigint |
-| movie_id | bigint |
-| text | text |
-
-### likes
-
-| Column | Type |
-| ------ | ---- |
-| user_id | bigint |
-| movie_id | bigint |
-
-## 補足
-
-- 認証にはDeviseを利用しています。
-- 画像アップロードにはCarrierWaveを利用しています。
-- 画像アップロード時の自動リサイズを有効にしたい場合は `brew install imagemagick` で ImageMagick を入れてください。
-- ランキングはいいね数をもとに算出しています。
-- 本番用 asset precompile は `SECRET_KEY_BASE_DUMMY=1 RAILS_ENV=production bundle exec rails assets:precompile` で確認できます。
+- アプリのルーティング概要:
+  - `/` (映画一覧)
+  - `/movies/new` (新規映画投稿)
+  - `/movies/:id` (映画詳細)
+  - `/movies/search` (映画検索)
+  - `/movies/rank` (ランキング)
+  - `/users/:id` (マイページ)
+- 画像アップロード時の自動リサイズを有効にするには、Mac環境の場合 `brew install imagemagick` コマンド等で **ImageMagick** を事前にインストールしてください。
+- ランキングは `likes_count` をもとに効率よく算出・表示しています。
+- 本番用 asset precompile をローカルで試す場合は、以下のコマンドを実行してください。
+  ```bash
+  SECRET_KEY_BASE_DUMMY=1 RAILS_ENV=production bundle exec rails assets:precompile
+  ```

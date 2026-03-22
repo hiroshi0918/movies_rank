@@ -1,11 +1,13 @@
 .content-row
   .container
     = form_with(model: @movie, local: true) do |form|
+      = render 'layouts/error_messages', model: form.object
       .h3
       編集
       = form.text_field :title, placeholder: "映画タイトル", class: "container--name"
       = form.text_field :director, placeholder: "監督名", class: "container--director"
       = form.text_field :category, placeholder: "ジャンル", class: "container--category"
+      = form.text_field :youtube_url, placeholder: "YouTubeのURL", class: "cantainer--youtube"
       = form.text_area :detail, placeholder: "映画詳細" , rows: "10", class: "container--detail"
       = form.label :image, class: 'container--image' do
         = icon('fas', 'image', class: 'icon')

@@ -1,6 +1,7 @@
 .content-row
   .container
     = form_with(model: @movie, local: true) do |form|
+      = render 'layouts/error_messages', model: form.object
       .h3
       新規映画投稿
       = form.text_field :title, placeholder: "映画タイトル", class: "container--name"

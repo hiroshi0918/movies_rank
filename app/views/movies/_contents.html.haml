@@ -1,7 +1,7 @@
-= link_to    "/movies/#{movie.id}", class: "content" do
+= link_to movie_path(movie), class: "content" do
   = image_tag "#{movie.image}", class: "content__image"
   .content__title
     = movie.title
   .content__like
     いいね：
-    = movie.liked_users.count
+    = movie.likes_total

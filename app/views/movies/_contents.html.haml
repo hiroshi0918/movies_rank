@@ -1,7 +1,10 @@
-= link_to movie_path(movie), class: "content" do
-  = image_tag "#{movie.image}", class: "content__image"
-  .content__title
-    = movie.title
-  .content__like
-    いいね：
-    = movie.likes_total
+= link_to movie_path(movie), class: "movie-card-grid" do
+  .movie-card-grid__image-container
+    = image_tag movie.image_url, class: "movie-card-grid__image"
+  .movie-card-grid__info
+    .movie-card-grid__title= movie.title
+    .movie-card-grid__meta
+      %span.likes
+        %i.fa.fa-heart
+        = movie.likes_total
+      %span.category= movie.category

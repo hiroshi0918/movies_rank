@@ -1,0 +1,16 @@
+.movie-card{ class: rank ? 'rank-card' : '' }
+  - if rank
+    .rank-number= rank
+  = link_to movie_path(movie), class: "movie-card__link" do
+    .movie-card__image-container
+      = image_tag movie.image_url, class: "movie-card__image", alt: movie.title
+    .movie-card__hover-info
+      .movie-card__title= movie.title
+      .movie-card__meta
+        %span.movie-card__match 98% マッチ
+        %span.movie-card__category= movie.category
+      .movie-card__actions
+        %span.likes
+          %i.fa.fa-heart
+          = movie.likes_total
+        %span.director= movie.director

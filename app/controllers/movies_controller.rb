@@ -4,7 +4,12 @@ class MoviesController < ApplicationController
   before_action :authorize_movie_owner!, only: [:edit, :update, :destroy]
 
   def index
-    @movies = Movie.includes(:likes).page(params[:page]).per(10)
+    @all_ranks = Movie.create_all_ranks.includes(:likes)
+    @hero_movie = @all_ranks.first || Movie.includes(:likes).order(created_at: :desc).first
+    @trending_movies = Movie.includes(:likes).order(created_at: :desc).limit(12)
+    @animation_movies = Movie.where(category: 'Animation').includes(:likes).limit(12)
+    @action_movies = Movie.where(category: 'Action').includes(:likes).limit(12)
+    @drama_movies = Movie.where(category: 'Drama').includes(:likes).limit(12)
   end
 
   def new

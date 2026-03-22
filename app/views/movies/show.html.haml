@@ -1,61 +1,61 @@
-.content2
-  .left-content
-    = image_tag "#{@movie.image}", class: "left-content__image"
+.show-backdrop{ style: "background-image: url('#{@movie.image_url}')" }
+  .show-backdrop__image{ style: "background-image: url('#{@movie.image_url}')" }
+  .show-backdrop__gradient
+
+.show-content
+  .show-poster
+    = image_tag @movie.image_url, class: "show-poster__image", alt: @movie.title
     - if user_signed_in? && current_user == @movie.user
-      .left-content--btns
-        = link_to "編集", edit_movie_path(@movie.id), class: "edit-btn"
-        = link_to "削除", movie_path(@movie.id), class: "destroy-btn", data: { turbo_method: :delete, turbo_confirm: "この投稿を削除しますか？" }
-    .left-content--likes
+      .show-poster__actions
+        = link_to "編集", edit_movie_path(@movie.id), class: "btn-edit"
+        = link_to "削除", movie_path(@movie.id), class: "btn-delete", data: { turbo_method: :delete, turbo_confirm: "この投稿を削除しますか？" }
+    .show-poster__like
       - if user_signed_in?
         - if current_user.already_liked?(@movie)
-          = link_to movie_like_path(@movie), class: "left-content-likes--btn", data: { turbo_method: :delete } do
-            %i.fas.fa-thumbs-up いいね！
-            = @movie.likes_total
+          = link_to movie_like_path(@movie), class: "like-btn", data: { turbo_method: :delete } do
+            %i.fas.fa-thumbs-up
+            いいね！ #{@movie.likes_total}
         - else
-          = link_to movie_like_path(@movie), class: "left-content-likes--btn", data: { turbo_method: :post } do
-            %i.fas.fa-thumbs-up いいね！
-            = @movie.likes_total
+          = link_to movie_like_path(@movie), class: "like-btn", data: { turbo_method: :post } do
+            %i.fas.fa-thumbs-up
+            いいね！ #{@movie.likes_total}
       - else
-        .left-content-likes--btn
-          %i.fas.fa-thumbs-up いいね！
-          = @movie.likes_total
-  .right-content
-    .right-content__title
-      = @movie.title
-    .right-content__middle
-      .right-content__middle__info
+        .like-btn
+          %i.fas.fa-thumbs-up
+          いいね！ #{@movie.likes_total}
+
+  .show-details
+    %h1.show-details__title= @movie.title
+    .show-details__meta
+      %span.show-details__match 98% マッチ
+      %span.show-details__tag= @movie.category
+      %span.show-details__label
         監督:
-      .right-content__middle__director
-        = @movie.director
-      .right-content__middle__info
-        ジャンル:
-      .right-content__middle__category
-        = @movie.category
-    .right-content__detail
-      .right-content__detail__info
-        あらすじ
-      .right-content__detail__input
-        = @movie.detail
+        %strong= @movie.director
+    - if @movie.detail.present?
+      .show-details__section
+        %h3.show-details__section-title あらすじ
+        %p.show-details__text= @movie.detail
     - if @movie.youtube_url.present?
-      .right-content__video
-        %iframe(width="400" height="280" src="https://www.youtube.com/embed/#{@movie.youtube_url}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="movie trailer")
-.chat-space
-  .chat-form
+      .show-details__video
+        %iframe{ width: "100%", height: "400", src: "https://www.youtube.com/embed/#{@movie.youtube_url}", frameborder: "0", allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", allowfullscreen: true, title: "movie trailer" }
+
+.comments-section
+  .comment-form
     - if user_signed_in?
       = render "layouts/error_messages", model: @comment
       = form_with(model: [@movie, @comment], local: true, id: "new-comment") do |form|
-        = form.text_area :text, placeholder: "コメントする", rows: "2", class: "chat-form--box"
-        = form.submit "投稿", class: "chat-form--btn"
+        = form.text_area :text, placeholder: "コメントを入力...", rows: "3", class: "comment-form__input"
+        = form.submit "投稿する", class: "comment-form__submit"
     - else
-      %strong
-      %p ※※※ コメントの投稿には新規登録/ログインが必要です ※※※
-  .comments
-    %p＜レビュー一覧＞
+      %p.comment-form__notice
+        コメントの投稿には
+        = link_to "ログイン", new_user_session_path, style: "color: var(--nf-red); font-weight: 600;"
+        が必要です
+  .comments-list
+    %h3.comments-list__title レビュー一覧
     - if @comments
       - @comments.each do |comment|
-        .comments__para
-          .comments__para__talker
-            = comment.user.nickname
-          .comments__para__text
-            = comment.text
-            %br
+        .comment-item
+          .comment-item__user= comment.user.nickname
+          .comment-item__text= comment.text

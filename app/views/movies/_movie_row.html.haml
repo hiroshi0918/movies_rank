@@ -1,0 +1,10 @@
+.movie-row
+  %h2.movie-row__title= title
+  .movie-row__wrapper
+    %button.movie-row__arrow.movie-row__arrow--left{ "aria-label": "前へ", type: "button" }
+      %i.fa.fa-chevron-left
+    .movie-row__container
+      - movies.each_with_index do |movie, index|
+        = render partial: "movie_card", locals: { movie: movie, rank: (local_assigns[:is_rank] ? index + 1 : nil) }
+    %button.movie-row__arrow.movie-row__arrow--right{ "aria-label": "次へ", type: "button" }
+      %i.fa.fa-chevron-right

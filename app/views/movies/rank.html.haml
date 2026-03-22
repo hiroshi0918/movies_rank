@@ -1,6 +1,15 @@
-.contents
-  - @all_ranks.each.with_index do |movie,i|
-    = i+1
-    位
-    = render partial: "contents", locals: { movie: movie }
-  
+.grid-page
+  %h2.grid-page__title TOP 10 ランキング
+  .grid-container
+    - @all_ranks.each_with_index do |movie, i|
+      .rank-grid-item
+        .rank-badge= i + 1
+        = link_to movie_path(movie), class: "grid-card" do
+          = image_tag movie.image_url, class: "grid-card__image", alt: movie.title
+          .grid-card__overlay
+            .grid-card__title= movie.title
+            .grid-card__meta
+              %span.likes
+                %i.fa.fa-heart
+                = movie.likes_total
+              %span.category= movie.category

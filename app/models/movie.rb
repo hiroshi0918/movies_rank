@@ -28,19 +28,11 @@ class Movie < ApplicationRecord
   end
 
   def self.create_all_ranks
-    if column_names.include?('likes_count')
-      where.not(likes_count: 0).order(likes_count: :desc).limit(10)
-    else
-      joins(:likes).group(:id).order(Arel.sql('COUNT(likes.id) DESC')).limit(10)
-    end
+    where.not(likes_count: 0).order(likes_count: :desc).limit(10)
   end
 
   def likes_total
-    if self.class.column_names.include?('likes_count')
-      likes_count.to_i
-    else
-      likes.size
-    end
+    likes_count.to_i
   end
 
   private

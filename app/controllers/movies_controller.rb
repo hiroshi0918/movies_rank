@@ -4,12 +4,12 @@ class MoviesController < ApplicationController
   before_action :authorize_movie_owner!, only: [:edit, :update, :destroy]
 
   def index
-    @all_ranks = Movie.create_all_ranks.includes(:likes)
-    @hero_movie = @all_ranks.first || Movie.includes(:likes).order(created_at: :desc).first
-    @trending_movies = Movie.includes(:likes).order(created_at: :desc).limit(12)
-    @animation_movies = Movie.where(category: 'Animation').includes(:likes).limit(12)
-    @action_movies = Movie.where(category: 'Action').includes(:likes).limit(12)
-    @drama_movies = Movie.where(category: 'Drama').includes(:likes).limit(12)
+    @all_ranks = Movie.create_all_ranks
+    @hero_movie = @all_ranks.first || Movie.order(created_at: :desc).first
+    @trending_movies = Movie.order(created_at: :desc).limit(12)
+    @animation_movies = Movie.where(category: 'Animation').limit(12)
+    @action_movies = Movie.where(category: 'Action').limit(12)
+    @drama_movies = Movie.where(category: 'Drama').limit(12)
   end
 
   def new
@@ -47,7 +47,7 @@ class MoviesController < ApplicationController
   end
 
   def search
-    @movies = Movie.search(params[:keyword]).includes(:likes)
+    @movies = Movie.search(params[:keyword])
     respond_to do |format|
       format.html
       format.json{render action: :search}
@@ -55,7 +55,7 @@ class MoviesController < ApplicationController
   end
 
   def rank
-    @all_ranks = Movie.create_all_ranks.includes(:likes)
+    @all_ranks = Movie.create_all_ranks
   end
 
 

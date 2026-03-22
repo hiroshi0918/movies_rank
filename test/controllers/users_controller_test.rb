@@ -5,7 +5,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get new_user_registration_path
 
     assert_response :success
-    assert_select 'h2', 'Sign up'
+    assert_select 'h2', '新規登録'
   end
 
   test 'invalid sign up re-renders the form with errors' do

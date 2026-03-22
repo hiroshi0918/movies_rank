@@ -1,34 +1,4 @@
-.lists{
-  height: calc(100vh - 80px);
-  width: calc(100vw - 1200px);
-  background-color: #D7EEFF;
-  flex-direction: column;
-  font-size: 20px;
-  font-family: fantasy;
-  position:fixed;
-  z-index:1;
-  top: 80px;
-  right: 0px;
-    &__category{
-      text-decoration: none;
-      display: block;
-      color: black;
-      margin: 50px 0;
-
-    }
-    &__ranking{
-      text-decoration: none;
-      display: block;
-      color: black;
-      margin: 50px 0;
-
-    }
-    &__director{
-      text-decoration: none;
-      display: block;
-      color: black;
-      margin: 50px 0;
-
-    }
-
+// Lists partial — deprecated, kept for backward compatibility
+.lists {
+  display: none;
 }

@@ -1,26 +1,141 @@
-.movieTitle{
-  padding-top: 100px;
+// ============================
+// Netflix User Profile Page
+// ============================
+
+.profile-page {
+  padding: calc(var(--nf-header-height) + 40px) 4% 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  animation: fade-in 0.5s ease;
 }
-.content3{
-  margin-top: 30px;
-  padding: 10px auto;
-  border: groove;
-  &__right{
-    &__top{
-      &--title{
-        text-decoration: none;
-        color: black;
-        font-family: fantasy;
-        font-size: large;
-      }
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--nf-gray);
+
+  &__avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--nf-red), #b20710);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--nf-white);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  &__info {
+    flex: 1;
+  }
+
+  &__name {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--nf-white);
+    margin-bottom: 4px;
+  }
+
+  &__sub {
+    color: var(--nf-white-muted);
+    font-size: 14px;
+  }
+}
+
+.profile-section {
+  margin-bottom: 48px;
+
+  &__title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--nf-white-soft);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background-color: var(--nf-red);
+      border-radius: 2px;
     }
-    &__bottom{
-      &--userName{
-        &--btn{
-          text-decoration: none;
-          color: black;
-        }
-      }}}}
-.LikedMovies{
-  padding-top: 30px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+
+  &__empty {
+    color: var(--nf-gray-text);
+    font-size: 14px;
+    padding: 20px;
+    text-align: center;
+    border: 1px dashed var(--nf-gray);
+    border-radius: var(--nf-radius-lg);
+  }
+}
+
+.profile-movie-card {
+  text-decoration: none;
+  display: block;
+  position: relative;
+  border-radius: var(--nf-radius);
+  overflow: hidden;
+  transition: transform var(--nf-transition), box-shadow var(--nf-transition);
+
+  &:hover {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+
+    .profile-movie-card__overlay {
+      opacity: 1;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    background-color: var(--nf-gray);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity var(--nf-transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 12px;
+  }
+
+  &__title {
+    color: var(--nf-white);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__meta {
+    color: var(--nf-green);
+    font-size: 11px;
+    margin-top: 4px;
+  }
 }

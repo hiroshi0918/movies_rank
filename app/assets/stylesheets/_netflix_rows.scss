@@ -1,0 +1,420 @@
+// ============================
+// Netflix Main Content & Rows
+// ============================
+
+.main-content {
+  padding-top: var(--nf-header-height);
+  background-color: var(--nf-black);
+  min-height: 100vh;
+}
+
+// ============================
+// Hero Banner
+// ============================
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 85vh;
+  min-height: 500px;
+  max-height: 900px;
+  overflow: hidden;
+  margin-top: calc(var(--nf-header-height) * -1);
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 20%;
+    background-repeat: no-repeat;
+    transform: scale(1.02);
+    animation: hero-zoom 25s ease-in-out infinite alternate;
+  }
+
+  &__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(20, 20, 20, 0.95) 0%,
+      rgba(20, 20, 20, 0.6) 40%,
+      rgba(20, 20, 20, 0.1) 70%,
+      rgba(20, 20, 20, 0) 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(20, 20, 20, 1) 0%,
+      rgba(20, 20, 20, 0.4) 20%,
+      rgba(20, 20, 20, 0) 50%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(20, 20, 20, 0.6) 0%,
+      rgba(20, 20, 20, 0) 15%
+    );
+  }
+
+  &__content {
+    position: absolute;
+    bottom: 25%;
+    left: 4%;
+    max-width: 600px;
+    z-index: 2;
+    animation: hero-content-in 0.8s ease 0.2s both;
+  }
+
+  &__title {
+    font-size: clamp(32px, 4vw, 60px);
+    font-weight: 900;
+    color: var(--nf-white);
+    margin-bottom: 16px;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  &__match {
+    color: var(--nf-green);
+    font-weight: 700;
+  }
+
+  &__category {
+    color: var(--nf-white-soft);
+    padding: 3px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    font-size: 12px;
+  }
+
+  &__director {
+    color: var(--nf-white-muted);
+    font-size: 13px;
+  }
+
+  &__description {
+    color: var(--nf-white-soft);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 28px;
+  border-radius: var(--nf-radius);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all var(--nf-transition);
+  font-family: var(--nf-font);
+
+  &--play {
+    background-color: var(--nf-white);
+    color: var(--nf-black);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    i {
+      font-size: 18px;
+    }
+  }
+
+  &--list {
+    background-color: rgba(109, 109, 110, 0.7);
+    color: var(--nf-white);
+
+    &:hover {
+      background-color: rgba(109, 109, 110, 0.4);
+    }
+  }
+}
+
+@keyframes hero-zoom {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.08); }
+}
+
+@keyframes hero-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================
+// Movie Rows
+// ============================
+.home-container {
+  position: relative;
+  z-index: 3;
+  margin-top: -80px;
+}
+
+.movie-row {
+  margin: 2.5vw 0;
+  padding: 0 4%;
+
+  &__title {
+    font-size: clamp(16px, 1.4vw, 22px);
+    color: var(--nf-white-soft);
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    text-decoration: none;
+    display: inline-block;
+    transition: color var(--nf-transition);
+
+    &:hover {
+      color: var(--nf-white);
+    }
+  }
+
+  &__wrapper {
+    position: relative;
+    
+    &:hover {
+      .movie-row__arrow {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 20px 0;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__arrow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 55px;
+    z-index: 10;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity var(--nf-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--nf-white);
+    font-size: 28px;
+
+    &--left {
+      left: -20px;
+      background: linear-gradient(to right, rgba(20, 20, 20, 0.9), transparent);
+      padding-left: 10px;
+    }
+
+    &--right {
+      right: -20px;
+      background: linear-gradient(to left, rgba(20, 20, 20, 0.9), transparent);
+      padding-right: 10px;
+    }
+
+    &:hover {
+      color: var(--nf-white);
+      i {
+        transform: scale(1.3);
+      }
+    }
+
+    i {
+      transition: transform var(--nf-transition);
+    }
+  }
+}
+
+// ============================
+// Movie Cards
+// ============================
+.movie-card {
+  flex: 0 0 auto;
+  width: 15vw;
+  min-width: 160px;
+  margin-right: 6px;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), z-index 0s 0.4s;
+  cursor: pointer;
+  border-radius: var(--nf-radius);
+  overflow: visible;
+
+  &:hover {
+    transform: scale(1.4);
+    z-index: 20;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), z-index 0s;
+
+    .movie-card__hover-info {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .movie-card__image-container {
+      border-radius: var(--nf-radius) var(--nf-radius) 0 0;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+    display: block;
+    color: var(--nf-white);
+  }
+
+  &__image-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--nf-radius);
+    background-color: var(--nf-gray);
+    transition: border-radius var(--nf-transition), box-shadow var(--nf-transition);
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--nf-transition);
+  }
+
+  &__hover-info {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--nf-dark);
+    padding: 14px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.3s ease;
+    border-radius: 0 0 var(--nf-radius) var(--nf-radius);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+  }
+
+  &__title {
+    color: var(--nf-white);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 11px;
+  }
+
+  &__match {
+    color: var(--nf-green);
+    font-weight: 700;
+  }
+
+  &__category {
+    color: var(--nf-white-soft);
+    padding: 1px 6px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    font-size: 10px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--nf-white-muted);
+
+    .likes {
+      color: var(--nf-red);
+      font-weight: 600;
+      i { margin-right: 4px; }
+    }
+
+    .director {
+      font-size: 10px;
+      color: var(--nf-gray-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100px;
+    }
+  }
+}
+
+// ============================
+// Rank Cards (TOP 10)
+// ============================
+.rank-card {
+  width: 20vw;
+  min-width: 220px;
+  display: flex;
+  align-items: center;
+  margin-right: 1vw;
+
+  .rank-number {
+    font-size: clamp(60px, 10vw, 140px);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--nf-black);
+    -webkit-text-stroke: 2px #595959;
+    margin-right: -1.8vw;
+    z-index: 1;
+    font-family: 'Arial Black', Impact, sans-serif;
+    transition: transform var(--nf-transition);
+  }
+
+  .movie-card__link {
+    flex: 1;
+    z-index: 2;
+  }
+
+  .movie-card__image-container {
+    aspect-ratio: 2 / 3;
+  }
+
+  &:hover {
+    transform: scale(1.08);
+    .rank-number {
+      transform: scale(1.1);
+      -webkit-text-stroke-color: var(--nf-red);
+    }
+  }
+}

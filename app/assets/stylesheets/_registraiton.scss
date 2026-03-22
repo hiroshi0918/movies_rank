@@ -1,3 +1,129 @@
-.new_view,.new_user{
-  padding-top: 100px;
+// ============================
+// Netflix Auth Pages
+// ============================
+
+.auth-page {
+  min-height: 100vh;
+  background-color: var(--nf-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--nf-header-height) + 40px) 20px 40px;
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 450px;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 48px 56px;
+  border-radius: var(--nf-radius-lg);
+  animation: fade-in 0.5s ease;
+  backdrop-filter: blur(5px);
+
+  &__title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--nf-white);
+    margin-bottom: 28px;
+  }
+
+  .field {
+    margin-bottom: 20px;
+    position: relative;
+
+    label {
+      display: block;
+      color: var(--nf-white-muted);
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      letter-spacing: 0.3px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      height: 50px;
+      background-color: var(--nf-gray);
+      border: 1px solid var(--nf-gray);
+      border-radius: var(--nf-radius);
+      color: var(--nf-white);
+      padding: 0 16px;
+      font-size: 15px;
+      font-family: var(--nf-font);
+      box-sizing: border-box;
+      transition: all var(--nf-transition);
+
+      &:focus {
+        background-color: #454545;
+        border-bottom: 2px solid var(--nf-orange);
+        outline: none;
+      }
+
+      &::placeholder {
+        color: var(--nf-gray-text);
+      }
+    }
+
+    em {
+      color: var(--nf-gray-text);
+      font-size: 12px;
+    }
+  }
+
+  .actions {
+    margin-top: 30px;
+
+    input[type="submit"] {
+      width: 100%;
+      height: 50px;
+      background-color: var(--nf-red);
+      color: var(--nf-white);
+      border: none;
+      border-radius: var(--nf-radius);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: var(--nf-font);
+      transition: all var(--nf-transition);
+      letter-spacing: 0.5px;
+
+      &:hover {
+        background-color: var(--nf-red-hover);
+        box-shadow: 0 4px 20px rgba(229, 9, 20, 0.4);
+      }
+    }
+  }
+
+  .remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--nf-white-muted);
+    font-size: 13px;
+
+    input[type="checkbox"] {
+      accent-color: var(--nf-red);
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .auth-links {
+    margin-top: 24px;
+    text-align: center;
+
+    a {
+      color: var(--nf-white-muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color var(--nf-transition);
+      margin: 0 8px;
+
+      &:hover {
+        color: var(--nf-white);
+      }
+    }
+  }
 }

@@ -5,16 +5,28 @@
     %title MoviesRank
     = csrf_meta_tags
     = csp_meta_tag
+    %link{ rel: "preconnect", href: "https://fonts.googleapis.com" }
+    %link{ rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: true }
+    %link{ rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" }
     = stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload"
     = turbo_include_tags
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
   %body
     .header
-      = link_to "MoviesRank", root_path, class: "title"
-      = form_with(url: search_movies_path, local: true, method: :get, class: "search-form") do |form|
-        = form.text_field :keyword, placeholder: "映画を検索する", class: "sbox"
-        = form.submit "検索", class: "sbtn"
+      .header__left
+        = link_to "MoviesRank", root_path, class: "title"
+        .nav-links
+          = link_to "ホーム", root_path, class: "nav-link"
+          = link_to "シリーズ", "#", class: "nav-link"
+          = link_to "映画", "#", class: "nav-link"
+          = link_to "新着&人気", "#", class: "nav-link"
+          = link_to "マイリスト", "#", class: "nav-link"
       .header__right
+        .search-container
+          = form_with(url: search_movies_path, local: true, method: :get, class: "search-form") do |form|
+            = form.text_field :keyword, placeholder: "映画を検索する", class: "sbox"
+            %button.sbtn{type: "submit"}
+              %i.fa.fa-search
         - if user_signed_in?
           = link_to current_user.nickname, user_path(current_user), class: "header__right--btn"
           = link_to "新規投稿", new_movie_path, class: "header__right--btn"
@@ -22,11 +34,8 @@
         - else
           = link_to "ログイン", new_user_session_path, class: "header__right--btn"
           = link_to "新規登録", new_user_registration_path, class: "header__right--btn"
-    .lists
-      = link_to "ジャンル", root_path, class: "lists__category"
-      = link_to "ランキング", rank_movies_path, class: "lists__ranking"
-      = link_to "監督一覧", root_path, class: "lists__director"
-    .notifications
-      - flash.each do |key, value|
-        = content_tag :div, value, class: key
-    = yield
+    .main-content
+      .notifications
+        - flash.each do |key, value|
+          = content_tag :div, value, class: key
+      = yield

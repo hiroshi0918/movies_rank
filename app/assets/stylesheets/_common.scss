@@ -1,33 +1,133 @@
-.notifications {
-  .notice {
-    background-color: #d4edda;
-    color: #155724;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #c3e6cb;
-    border-radius: 4px;
-    text-align: center;
-  }
-  .alert {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #f5c6cb;
-    border-radius: 4px;
-    text-align: center;
+// ============================
+// Netflix Design System
+// ============================
+
+// CSS Custom Properties
+:root {
+  --nf-black: #141414;
+  --nf-dark: #181818;
+  --nf-dark-card: #222;
+  --nf-gray: #333;
+  --nf-gray-light: #444;
+  --nf-gray-text: #999;
+  --nf-white: #fff;
+  --nf-white-soft: #e5e5e5;
+  --nf-white-muted: #a3a3a3;
+  --nf-red: #e50914;
+  --nf-red-hover: #b20710;
+  --nf-green: #46d369;
+  --nf-orange: #e87c03;
+  --nf-gold: #f5c518;
+  --nf-radius: 4px;
+  --nf-radius-lg: 8px;
+  --nf-transition: 0.3s ease;
+  --nf-header-height: 68px;
+  --nf-font: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+body {
+  background-color: var(--nf-black);
+  color: var(--nf-white);
+  margin: 0;
+  font-family: var(--nf-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--nf-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--nf-gray);
+  border-radius: 4px;
+  &:hover {
+    background: var(--nf-gray-light);
   }
 }
 
+// Text selection
+::selection {
+  background-color: var(--nf-red);
+  color: var(--nf-white);
+}
+
+// Flash notifications — Netflix-style snackbar
+.notifications {
+  position: fixed;
+  top: calc(var(--nf-header-height) + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: auto;
+  min-width: 300px;
+  max-width: 600px;
+
+  .notice, .alert {
+    padding: 14px 28px;
+    margin-bottom: 10px;
+    border-radius: var(--nf-radius-lg);
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    animation: snackbar-in 0.4s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .notice {
+    background-color: rgba(70, 211, 105, 0.15);
+    color: var(--nf-green);
+    border: 1px solid rgba(70, 211, 105, 0.3);
+  }
+
+  .alert {
+    background-color: rgba(229, 9, 20, 0.15);
+    color: #ff6b6b;
+    border: 1px solid rgba(229, 9, 20, 0.3);
+  }
+}
+
+@keyframes snackbar-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+// Error messages (forms)
 .error-messages {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 15px;
+  background-color: rgba(229, 9, 20, 0.1);
+  color: #ff6b6b;
+  padding: 15px 20px;
   margin-bottom: 20px;
-  border: 1px solid #f5c6cb;
-  border-radius: 4px;
+  border: 1px solid rgba(229, 9, 20, 0.3);
+  border-radius: var(--nf-radius);
+  font-size: 14px;
   ul {
     margin: 0;
     padding-left: 20px;
   }
+}
+
+// Smooth page transitions
+.main-content {
+  animation: fade-in 0.5s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

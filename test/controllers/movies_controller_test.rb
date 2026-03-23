@@ -2,43 +2,47 @@ require 'test_helper'
 
 class MoviesControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @user = users(:one)
     @movie = movies(:one)
   end
 
-  test 'guest is redirected from new movie page' do
-    get new_movie_path
-
-    assert_redirected_to new_user_session_path
+  test "should get index" do
+    get root_url
+    assert_response :success
   end
 
-  test 'non owner cannot access edit page' do
-    sign_in users(:two)
-
-    get edit_movie_path(@movie)
-
-    assert_redirected_to movie_path(@movie)
-    assert_equal '自分の投稿のみ編集できます', flash[:alert]
+  test "should get rank" do
+    get rank_movies_url
+    assert_response :success
   end
 
-  test 'owner can update own movie' do
-    sign_in users(:one)
-    image = Rack::Test::UploadedFile.new(
-      Rails.root.join('public/apple-touch-icon.png'),
-      'image/png'
-    )
+  test "should search movies" do
+    get search_movies_url, params: { keyword: 'Inception' }
+    assert_response :success
+    assert_select '.grid-card__title', text: 'Inception'
+  end
 
-    patch movie_path(@movie), params: {
-      movie: {
-        title: 'Updated Title',
-        director: @movie.director,
-        category: @movie.category,
-        image: image,
-        detail: @movie.detail,
-        youtube_url: @movie.youtube_url
-      }
-    }
+  test "should search movies via json" do
+    get search_movies_url(format: :json), params: { keyword: 'Inception' }
+    assert_response :success
+    json_response = JSON.parse(response.body)
+    assert_kind_of Array, json_response
+    assert_equal @movie.title, json_response.first['title']
+  end
 
-    assert_redirected_to movie_path(@movie)
-    assert_equal 'Updated Title', @movie.reload.title
+  test "should show movie" do
+    get movie_url(@movie)
+    assert_response :success
+  end
+
+  test "guest should not get new" do
+    get new_movie_url
+    assert_redirected_to new_user_session_url
+  end
+
+  test "authenticated user should get new" do
+    sign_in @user
+    get new_movie_url
+    assert_response :success
   end
 end

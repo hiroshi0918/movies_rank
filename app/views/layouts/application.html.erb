@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
     <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
     <%= turbo_include_tags %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <%= javascript_importmap_tags %>
   </head>
-  <body>
-    <div class="header">
+  <body data-controller="search">
+    <div class="header" data-controller="header">
       <div class="header__left">
         <%= link_to "MoviesRank", root_path, class: "title" %>
         <div class="nav-links">
@@ -26,8 +26,8 @@
       </div>
       <div class="header__right">
         <div class="search-container">
-          <%= form_with(url: search_movies_path, local: true, method: :get, class: "search-form") do |form| %>
-            <%= form.text_field :keyword, placeholder: "映画を検索する", class: "sbox" %>
+          <%= form_with(url: search_movies_path, local: true, method: :get, class: "search-form", data: { action: "submit->search#performSearch" }) do |form| %>
+            <%= form.text_field :keyword, placeholder: "映画を検索する", class: "sbox", data: { search_target: "input", action: "keyup->search#performSearch" } %>
             <button class="sbtn" type="submit">
               <i class="fa fa-search"></i>
             </button>
@@ -46,7 +46,7 @@
     <div class="main-content">
       <div class="notifications">
         <% flash.each do |key, value| %>
-          <%= content_tag :div, value, class: key %>
+          <%= content_tag :div, value, class: key, data: { controller: "flash" } %>
         <% end %>
       </div>
       <%= yield %>

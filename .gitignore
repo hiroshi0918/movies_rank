@@ -33,3 +33,6 @@
 AGENTS.md
 docs/codex_task_template.md
 .gemini/
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

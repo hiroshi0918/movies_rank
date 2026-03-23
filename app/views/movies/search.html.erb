@@ -1,7 +1,7 @@
 <div class="grid-page">
   <h2 class="grid-page__title">検索結果</h2>
   <% if @movies.present? %>
-    <div class="grid-container">
+    <div class="grid-container" data-search-target="list">
       <% @movies.each do |movie| %>
         <%= link_to movie_path(movie), class: "grid-card" do %>
           <%= image_tag movie.image_url, class: "grid-card__image", alt: movie.title %>

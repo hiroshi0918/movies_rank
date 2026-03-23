@@ -58,13 +58,13 @@
   </div>
 </div>
 
-<div class="comments-section">
+<div class="comments-section" data-controller="comment">
   <div class="comment-form">
     <% if user_signed_in? %>
       <%= render "layouts/error_messages", model: @comment %>
-      <%= form_with(model: [@movie, @comment], local: true, id: "new-comment") do |form| %>
-        <%= form.text_area :text, placeholder: "コメントを入力...", rows: "3", class: "comment-form__input" %>
-        <%= form.submit "投稿する", class: "comment-form__submit" %>
+      <%= form_with(model: [@movie, @comment], local: true, id: "new-comment", data: { comment_target: "form", action: "submit->comment#submit" }) do |form| %>
+        <%= form.text_area :text, placeholder: "コメントを入力...", rows: "3", class: "comment-form__input", data: { comment_target: "input" } %>
+        <%= form.submit "投稿する", class: "comment-form__submit", data: { comment_target: "submit" } %>
       <% end %>
     <% else %>
       <p class="comment-form__notice">
@@ -74,7 +74,7 @@
       </p>
     <% end %>
   </div>
-  <div class="comments-list">
+  <div class="comments-list" data-comment-target="list">
     <h3 class="comments-list__title">レビュー一覧</h3>
     <% if @comments %>
       <% @comments.each do |comment| %>

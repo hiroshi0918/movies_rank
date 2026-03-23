@@ -1,85 +1,127 @@
 // ============================
-// Netflix Create/Edit Form
+// Netflix Create/Edit Form - Enhanced
 // ============================
 
 .content-row {
-  padding: calc(var(--nf-header-height) + 40px) 4% 60px;
+  padding: calc(var(--nf-header-height) + 60px) 4% 80px;
   background-color: var(--nf-black);
   min-height: 100vh;
+  position: relative;
+
+  // Background decorations
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 10% 20%, rgba(229, 9, 20, 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(229, 9, 20, 0.04) 0%, transparent 35%);
+    pointer-events: none;
+  }
 
   .container {
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.75);
-    padding: 48px 56px;
-    border-radius: var(--nf-radius-lg);
-    backdrop-filter: blur(5px);
-    animation: fade-in 0.5s ease;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(20, 20, 20, 0.9));
+    padding: 56px 64px;
+    border-radius: var(--nf-radius-xl);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    animation: form-slide-up 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid var(--nf-glass-border);
+    box-shadow: 0 0 80px rgba(229, 9, 20, 0.08), var(--nf-shadow-lg);
+    position: relative;
+    z-index: 1;
+
+    // Top accent
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--nf-red), transparent);
+      border-radius: 0 0 4px 4px;
+    }
     
     h3 {
-      font-size: 32px;
-      font-weight: 700;
+      font-size: 36px;
+      font-weight: 900;
       color: var(--nf-white);
-      margin-bottom: 28px;
+      margin-bottom: 36px;
+      text-align: center;
+      letter-spacing: -1px;
     }
 
     input[type="text"], textarea {
       width: 100%;
-      background-color: var(--nf-gray);
-      border: 1px solid var(--nf-gray);
-      border-radius: var(--nf-radius);
+      background: var(--nf-gray);
+      border: 2px solid var(--nf-gray);
+      border-radius: var(--nf-radius-lg);
       color: var(--nf-white);
-      height: 50px;
-      line-height: 50px;
+      height: 54px;
+      line-height: 54px;
       padding: 0 20px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       font-size: 15px;
       font-family: var(--nf-font);
       display: block;
       box-sizing: border-box;
-      transition: all var(--nf-transition);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       
       &::placeholder {
         color: var(--nf-gray-text);
       }
 
       &:focus {
-        background-color: #454545;
-        border-bottom: 2px solid var(--nf-orange);
+        background: var(--nf-gray-light);
+        border-color: var(--nf-red);
         outline: none;
+        box-shadow: 0 0 25px var(--nf-red-glow);
       }
     }
 
     textarea {
       height: 200px;
       line-height: 1.6;
-      padding: 15px 20px;
+      padding: 18px 20px;
       resize: vertical;
     }
 
     &--image {
-      display: block;
-      background-color: var(--nf-gray);
-      color: var(--nf-white);
-      padding: 18px 20px;
-      border-radius: var(--nf-radius);
-      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: var(--nf-gray);
+      color: var(--nf-white-soft);
+      padding: 24px;
+      border-radius: var(--nf-radius-lg);
+      margin-bottom: 20px;
       cursor: pointer;
       text-align: center;
       border: 2px dashed var(--nf-gray-light);
-      transition: all var(--nf-transition);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       font-family: var(--nf-font);
-      font-size: 14px;
+      font-size: 15px;
+      font-weight: 600;
       
       &:hover {
-        background-color: var(--nf-gray-light);
+        background: var(--nf-gray-light);
         border-color: var(--nf-red);
-        box-shadow: 0 0 20px rgba(229, 9, 20, 0.1);
+        color: var(--nf-white);
+        box-shadow: 0 0 30px var(--nf-red-glow);
+        transform: translateY(-2px);
       }
       
       .icon {
-        margin-right: 10px;
-        font-size: 20px;
+        font-size: 24px;
+        color: var(--nf-red);
       }
     }
 
@@ -89,23 +131,50 @@
 
     &--btn {
       width: 100%;
-      height: 50px;
-      background-color: var(--nf-red);
+      height: 54px;
+      background: linear-gradient(135deg, var(--nf-red), var(--nf-red-hover));
       color: var(--nf-white);
       border: none;
-      border-radius: var(--nf-radius);
-      font-size: 16px;
-      font-weight: 700;
+      border-radius: var(--nf-radius-lg);
+      font-size: 17px;
+      font-weight: 800;
       cursor: pointer;
-      margin-top: 24px;
-      transition: all var(--nf-transition);
+      margin-top: 32px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       font-family: var(--nf-font);
       letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+        opacity: 0;
+        transition: opacity var(--nf-transition);
+      }
       
       &:hover {
-        background-color: var(--nf-red-hover);
-        box-shadow: 0 4px 20px rgba(229, 9, 20, 0.4);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 40px var(--nf-red-glow);
+        &::before { opacity: 1; }
+      }
+
+      &:active {
+        transform: translateY(-1px);
       }
     }
+  }
+}
+
+@keyframes form-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

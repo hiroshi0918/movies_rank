@@ -1,0 +1,53 @@
+<% if @hero_movie %>
+  <div class="hero-banner">
+    <div class="hero-banner__backdrop" style="background-image: url('<%= @hero_movie.image_url %>')"></div>
+    <div class="hero-banner__gradient"></div>
+    <div class="hero-banner__content">
+      <h1 class="hero-banner__title"><%= @hero_movie.title %></h1>
+      <div class="hero-banner__meta">
+        <span class="hero-banner__match">98% マッチ</span>
+        <span class="hero-banner__category"><%= @hero_movie.category %></span>
+        <span class="hero-banner__director"><%= @hero_movie.director %></span>
+      </div>
+      <% if @hero_movie.detail.present? %>
+        <p class="hero-banner__description"><%= truncate(@hero_movie.detail, length: 200) %></p>
+      <% end %>
+      <div class="hero-banner__buttons">
+        <%= link_to movie_path(@hero_movie), class: "hero-btn hero-btn--play" do %>
+          <i class="fa fa-play"></i>
+          詳細を見る
+        <% end %>
+        <% if user_signed_in? %>
+          <%= link_to movie_like_path(@hero_movie), class: "hero-btn hero-btn--list", data: { turbo_method: (current_user.already_liked?(@hero_movie) ? :delete : :post) } do %>
+            <i class="fa fa-plus"></i>
+            マイリスト
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="home-container">
+  <div class="rows-container">
+    <% if @all_ranks.present? %>
+      <%= render partial: "movie_row", locals: { title: "今日のTOP10（日本）", movies: @all_ranks, is_rank: true } %>
+    <% end %>
+
+    <% if @trending_movies.present? %>
+      <%= render partial: "movie_row", locals: { title: "視聴中コンテンツ", movies: @trending_movies } %>
+    <% end %>
+
+    <% if @action_movies.present? %>
+      <%= render partial: "movie_row", locals: { title: "アクション映画", movies: @action_movies } %>
+    <% end %>
+
+    <% if @animation_movies.present? %>
+      <%= render partial: "movie_row", locals: { title: "アニメーション", movies: @animation_movies } %>
+    <% end %>
+
+    <% if @drama_movies.present? %>
+      <%= render partial: "movie_row", locals: { title: "ドラマ", movies: @drama_movies } %>
+    <% end %>
+  </div>
+</div>

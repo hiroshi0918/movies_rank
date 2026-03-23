@@ -1,0 +1,49 @@
+<div class="profile-page">
+  <div class="profile-header">
+    <div class="profile-header__avatar"><%= @user.nickname[0] %></div>
+    <div class="profile-header__info">
+      <h1 class="profile-header__name"><%= @user.nickname %></h1>
+      <p class="profile-header__sub">メンバー</p>
+    </div>
+  </div>
+
+  <div class="profile-section">
+    <h2 class="profile-section__title">
+      <%= "#{@user.nickname}さんの投稿" %>
+    </h2>
+    <% if @movies.present? %>
+      <div class="profile-section__grid">
+        <% @movies.each do |movie| %>
+          <%= link_to movie_path(movie), class: "profile-movie-card" do %>
+            <%= image_tag movie.image_url, class: "profile-movie-card__image", alt: movie.title %>
+            <div class="profile-movie-card__overlay">
+              <div class="profile-movie-card__title"><%= movie.title %></div>
+              <div class="profile-movie-card__meta"><%= movie.category %></div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="profile-section__empty">まだ投稿がありません</p>
+    <% end %>
+  </div>
+
+  <div class="profile-section">
+    <h2 class="profile-section__title">いいねした映画</h2>
+    <% if @user.liked_movies.present? %>
+      <div class="profile-section__grid">
+        <% @user.liked_movies.each do |movie| %>
+          <%= link_to movie_path(movie), class: "profile-movie-card" do %>
+            <%= image_tag movie.image_url, class: "profile-movie-card__image", alt: movie.title %>
+            <div class="profile-movie-card__overlay">
+              <div class="profile-movie-card__title"><%= movie.title %></div>
+              <div class="profile-movie-card__meta"><%= movie.category %></div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="profile-section__empty">まだいいねがありません</p>
+    <% end %>
+  </div>
+</div>

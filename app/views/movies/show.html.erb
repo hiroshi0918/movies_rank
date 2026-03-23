@@ -1,0 +1,88 @@
+<div class="show-backdrop" style="background-image: url('<%= @movie.image_url %>')">
+  <div class="show-backdrop__image" style="background-image: url('<%= @movie.image_url %>')"></div>
+  <div class="show-backdrop__gradient"></div>
+</div>
+
+<div class="show-content">
+  <div class="show-poster">
+    <%= image_tag @movie.image_url, class: "show-poster__image", alt: @movie.title %>
+    <% if user_signed_in? && current_user == @movie.user %>
+      <div class="show-poster__actions">
+        <%= link_to "編集", edit_movie_path(@movie.id), class: "btn-edit" %>
+        <%= link_to "削除", movie_path(@movie.id), class: "btn-delete", data: { turbo_method: :delete, turbo_confirm: "この投稿を削除しますか？" } %>
+      </div>
+    <% end %>
+    <div class="show-poster__like">
+      <% if user_signed_in? %>
+        <% if current_user.already_liked?(@movie) %>
+          <%= link_to movie_like_path(@movie), class: "like-btn", data: { turbo_method: :delete } do %>
+            <i class="fas fa-thumbs-up"></i>
+            いいね！ <%= @movie.likes_total %>
+          <% end %>
+        <% else %>
+          <%= link_to movie_like_path(@movie), class: "like-btn", data: { turbo_method: :post } do %>
+            <i class="fas fa-thumbs-up"></i>
+            いいね！ <%= @movie.likes_total %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <div class="like-btn">
+          <i class="fas fa-thumbs-up"></i>
+          いいね！ <%= @movie.likes_total %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="show-details">
+    <h1 class="show-details__title"><%= @movie.title %></h1>
+    <div class="show-details__meta">
+      <span class="show-details__match">98% マッチ</span>
+      <span class="show-details__tag"><%= @movie.category %></span>
+      <span class="show-details__label">
+        監督:
+        <strong><%= @movie.director %></strong>
+      </span>
+    </div>
+    <% if @movie.detail.present? %>
+      <div class="show-details__section">
+        <h3 class="show-details__section-title">あらすじ</h3>
+        <p class="show-details__text"><%= @movie.detail %></p>
+      </div>
+    <% end %>
+    <% if @movie.youtube_url.present? %>
+      <div class="show-details__video">
+        <iframe width="100%" height="400" src="https://www.youtube.com/embed/<%= @movie.youtube_url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true" title="movie trailer"></iframe>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="comments-section">
+  <div class="comment-form">
+    <% if user_signed_in? %>
+      <%= render "layouts/error_messages", model: @comment %>
+      <%= form_with(model: [@movie, @comment], local: true, id: "new-comment") do |form| %>
+        <%= form.text_area :text, placeholder: "コメントを入力...", rows: "3", class: "comment-form__input" %>
+        <%= form.submit "投稿する", class: "comment-form__submit" %>
+      <% end %>
+    <% else %>
+      <p class="comment-form__notice">
+        コメントの投稿には
+        <%= link_to "ログイン", new_user_session_path, style: "color: var(--nf-red); font-weight: 600;" %>
+        が必要です
+      </p>
+    <% end %>
+  </div>
+  <div class="comments-list">
+    <h3 class="comments-list__title">レビュー一覧</h3>
+    <% if @comments %>
+      <% @comments.each do |comment| %>
+        <div class="comment-item">
+          <div class="comment-item__user"><%= comment.user.nickname %></div>
+          <div class="comment-item__text"><%= comment.text %></div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

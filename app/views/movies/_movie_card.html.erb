@@ -1,0 +1,24 @@
+<div class="movie-card <%= rank ? 'rank-card' : '' %>">
+  <% if rank %>
+    <div class="rank-number"><%= rank %></div>
+  <% end %>
+  <%= link_to movie_path(movie), class: "movie-card__link" do %>
+    <div class="movie-card__image-container">
+      <%= image_tag movie.image_url, class: "movie-card__image", alt: movie.title %>
+    </div>
+    <div class="movie-card__hover-info">
+      <div class="movie-card__title"><%= movie.title %></div>
+      <div class="movie-card__meta">
+        <span class="movie-card__match">98% マッチ</span>
+        <span class="movie-card__category"><%= movie.category %></span>
+      </div>
+      <div class="movie-card__actions">
+        <span class="likes">
+          <i class="fa fa-heart"></i>
+          <%= movie.likes_total %>
+        </span>
+        <span class="director"><%= movie.director %></span>
+      </div>
+    </div>
+  <% end %>
+</div>

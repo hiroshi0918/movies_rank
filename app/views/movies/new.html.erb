@@ -1,0 +1,20 @@
+<div class="content-row">
+  <div class="container">
+    <%= form_with(model: @movie, local: true) do |form| %>
+      <%= render 'layouts/error_messages', model: form.object %>
+      <h3>新規映画投稿</h3>
+      <%= form.text_field :title, placeholder: "映画タイトル", class: "container--name" %>
+      <%= form.text_field :director, placeholder: "監督名", class: "container--director" %>
+      <%= form.text_field :category, placeholder: "ジャンル", class: "container--category" %>
+      <%= form.text_field :youtube_url, placeholder: "YouTubeのURL", class: "container--youtube" %>
+      <%= form.text_area :detail, placeholder: "映画詳細", rows: "10", class: "container--detail" %>
+      <%= form.label :image, class: 'container--image' do %>
+        <%= icon('fas', 'image', class: 'icon') %>
+        <span>画像を選択</span>
+        <%= form.file_field :image, class: 'hidden' %>
+      <% end %>
+
+      <%= form.submit "投稿する", class: "container--btn" %>
+    <% end %>
+  </div>
+</div>

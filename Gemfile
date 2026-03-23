@@ -7,7 +7,6 @@ gem "bootsnap", ">= 1.18", require: false
 gem "devise", "~> 5.0"
 gem "ffi", ">= 1.17.1"
 gem "font-awesome-sass", "~> 5.15"
-gem "haml-rails", "~> 3.0"
 gem "image_processing", "~> 1.2"
 gem "jbuilder", "~> 2.14"
 gem "jquery-rails", "~> 4.6"

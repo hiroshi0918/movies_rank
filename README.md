@@ -15,7 +15,7 @@
 - [🛠 使用技術](#-使用技術)
 - [🚀 セットアップ手順](#-セットアップ手順)
 - [📖 使い方](#-使い方)
-- [🗄 データベース設計](#-データベース設計)
+- [🏗 アーキテクチャ・設計のポイント](#-アーキテクチャ設計のポイント)
 - [📝 補足・仕様](#-補足仕様)
 
 ---
@@ -60,13 +60,16 @@
 - **MySQL**
 
 ### フロントエンド
-- **Haml** / **SCSS**
-- **JavaScript** / **jQuery** / **Turbo**
+- **ERB** / **SCSS** (via DartSass)
+- **Hotwire** (Turbo 8 / Stimulus)
+- **Importmap-rails** (JavaScript モジュール管理)
 
 ### 主要Gem
 - **Devise** (ユーザー認証)
-- **CarrierWave** / **MiniMagick** (画像アップロード・処理)
+- **Active Storage** (画像アップロード)
+- **Image Processing** / **libvips or ImageMagick** (画像処理)
 - **Kaminari** (ページネーション)
+- **Font-Awesome-Sass** (アイコン)
 
 ---
 
@@ -76,9 +79,9 @@
 
 ### 📌 前提条件
 - Ruby 3.4.7
-- Bundler 2.7.x
+- Bundler 2.7.x (または最新)
 - MySQL
-- ImageMagick (画像リサイズに必要)
+- libvips または ImageMagick (画像リサイズに必要)
 
 ### 📥 インストール
 
@@ -94,7 +97,11 @@
    ```
 
 3. **環境変数の設定**
-   `.env.example` などの設定ファイルを参考に、実行環境に合わせて以下の環境変数を設定してください。
+   `.env.example` を参考に `.env` ファイルを作成し、実行環境に合わせて設定してください。
+   ```bash
+   cp .env.example .env
+   ```
+   設定項目:
    - `MYSQL_USERNAME`
    - `MYSQL_PASSWORD`
    - `MYSQL_HOST`
@@ -106,15 +113,15 @@
    ```
 
 5. **サンプルデータの投入（シード）**
-   実在の映画100件とダミーユーザー10名、およびテスト用のいいね・コメントデータを生成します。
+   実在の映画データとダミーユーザー、およびテスト用のいいね・コメントデータを生成します。
    ```bash
    bundle exec rails db:seed
    ```
-   *※実行には少し時間がかかります。ダミーユーザーは `user1@example.com` (パスワード: `password123`) 等でログインできます。*
 
 6. **サーバーの起動**
+   Asset のウォッチ（DartSass）を含めて起動するために `./bin/dev` を使用します。
    ```bash
-   bundle exec rails s
+   ./bin/dev
    ```
 
 7. **ブラウザで確認**
@@ -126,65 +133,44 @@
 ## 📖 使い方
 
 1. **ユーザー登録**：まずは新規登録（またはログイン）を行います。
-2. **映画を投稿**：「新規投稿」ボタンから、おすすめしたい映画の情報を登録します。
+2. **映画を投稿**：「新規投稿」ボタンから、おすすめしたい映画の情報を登録します。画像は直接アップロードするか、画像URLを指定できます。
 3. **映画を探す**：トップページの新着一覧や、検索フォームから気になる映画を探します。
 4. **リアクションする**：映画詳細ページで「いいね」を押したり、熱いコメントを残しましょう！
 5. **トレンドをチェック**：ランキングページで、今みんなが注目している人気作品を確認します。
 
 ---
 
-## 🗄 データベース設計
+## 🏗 アーキテクチャ・設計のポイント
 
-### テーブル構成（抜粋）
+単なるデータの保存だけでなく、パフォーマンスと整合性を意識した設計を行っています。
 
-#### `users` (ユーザー)
-| カラム名 | データ型 | 概要 |
-| --- | --- | --- |
-| `email` | string | メールアドレス |
-| `encrypted_password` | string | パスワード |
-| `nickname` | string | ユーザー名 |
+### 📊 エンティティ・リレーション
+```mermaid
+erDiagram
+    User ||--o{ Movie : "投稿"
+    User ||--o{ Like : "いいね"
+    User ||--o{ Comment : "コメント"
+    Movie ||--o{ Like : "被いいね"
+    Movie ||--o{ Comment : "被コメント"
+    Movie ||--o| ActiveStorage : "ポスター画像"
+```
 
-#### `movies` (映画)
-| カラム名 | データ型 | 概要 |
-| --- | --- | --- |
-| `title` | string | タイトル |
-| `director` | string | 監督名 |
-| `category` | string | ジャンル |
-| `image` | string | ポスター画像URL |
-| `detail` | text | あらすじ・詳細 |
-| `youtube_url` | string | 予告編のYouTube URL |
-| `user_id` | bigint | 投稿ユーザーID |
-| `likes_count` | integer | いいね数（キャッシュ） |
-
-#### `comments` (コメント)
-| カラム名 | データ型 | 概要 |
-| --- | --- | --- |
-| `user_id` | bigint | 投稿ユーザーID |
-| `movie_id` | bigint | 対象映画ID |
-| `text` | text | コメント本文 |
-
-#### `likes` (いいね)
-| カラム名 | データ型 | 概要 |
-| --- | --- | --- |
-| `user_id` | bigint | いいねしたユーザーID |
-| `movie_id` | bigint | いいねされた映画ID |
-
-*(※ 同じ映画への重複いいねを防止するユニーク制約などが設定されています)*
+### 💡 技術的なこだわり
+- **🔥 高速ランキング (Counter Cache)**:
+  ランキング表示を高速化するため、`movies.likes_count` にカウンターキャッシュを導入しています。これにより、集計クエリを発行せずに数百万件のデータでも瞬時にランキングを表示可能です。
+- **🛡 データの整合性**:
+  アプリケーション層だけでなく、DB層でも `Foreign Key` 制約と `Unique Index`（同一映画への重複いいね防止など）を設定し、不整合なデータが生まれない堅牢な設計にしています。
+- **🖼 柔軟な画像管理 (Active Storage)**:
+  Active Storageを採用し、現在はローカル保存ですが、環境変数一つで S3 や Google Cloud Storage などのクラウドストレージへ容易に切り替え可能な「ポータビリティ」を確保しています。
+- **🔍 YouTube動画IDの自動正規化**:
+  ユーザーがどんな形式のURL（短縮URL、共有URL、埋め込みコード等）を入力しても、モデルのバリデーション時に自動で11桁の動画IDを抽出し、DBにはクリーンなデータのみを保存するようにしています。
 
 ---
 
 ## 📝 補足・仕様
 
-- アプリのルーティング概要:
-  - `/` (映画一覧)
-  - `/movies/new` (新規映画投稿)
-  - `/movies/:id` (映画詳細)
-  - `/movies/search` (映画検索)
-  - `/movies/rank` (ランキング)
-  - `/users/:id` (マイページ)
-- 画像アップロード時の自動リサイズを有効にするには、Mac環境の場合 `brew install imagemagick` コマンド等で **ImageMagick** を事前にインストールしてください。
-- ランキングは `likes_count` をもとに効率よく算出・表示しています。
-- 本番用 asset precompile をローカルで試す場合は、以下のコマンドを実行してください。
-  ```bash
-  SECRET_KEY_BASE_DUMMY=1 RAILS_ENV=production bundle exec rails assets:precompile
-  ```
+- **画像アップロード**: `has_one_attached :image` を使用しており、Active Storage で管理されます。
+- **YouTube連携**: YouTubeのURLを入力すると、自動的に11桁の動画IDが抽出されて保存されます。
+- **ランキング**: `likes_count` をもとにした Top 10 ランキング機能を備えています。
+- **最適化**: 外部キー制約、インデックス、N+1問題の対策、および不要データのクリーンアップが実施されています。
+- **フロントエンド**: Turbo 8 による高速な画面遷移と、Stimulus によるインタラクティブなUIコンポーネントで構成されています。

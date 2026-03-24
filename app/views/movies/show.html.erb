@@ -35,6 +35,9 @@
     <div class="detail-body">
       <p class="detail-body__eyebrow">作品詳細</p>
       <h1 class="detail-body__title"><%= @movie.title %></h1>
+      <% if movie_original_title_text(@movie).present? %>
+        <p class="detail-body__original-title">原題: <%= movie_original_title_text(@movie) %></p>
+      <% end %>
       <div class="detail-body__meta">
         <span class="detail-body__tag"><%= @movie.category %></span>
         <span class="detail-body__meta-item">監督 <strong><%= @movie.director %></strong></span>
@@ -49,13 +52,17 @@
       <% end %>
 
       <% if @movie.youtube_url.present? %>
-        <section class="detail-section">
-          <div class="detail-section__header">
-            <h2 class="detail-section__title">予告編</h2>
-            <%= link_to "YouTubeで開く", "https://www.youtube.com/watch?v=#{@movie.youtube_url}", target: "_blank", rel: "noopener", class: "detail-section__link" %>
-          </div>
-          <div class="detail-video">
-            <iframe src="https://www.youtube.com/embed/<%= @movie.youtube_url %>" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="予告編"></iframe>
+        <section class="detail-section detail-section--trailer">
+          <div class="detail-video-card">
+            <div class="detail-section__header detail-video-card__header">
+              <h2 class="detail-section__title">予告編</h2>
+              <%= link_to "YouTubeで開く", "https://www.youtube.com/watch?v=#{@movie.youtube_url}", target: "_blank", rel: "noopener", class: "detail-section__link" %>
+            </div>
+            <div class="detail-video-card__body">
+              <div class="detail-video">
+                <iframe src="https://www.youtube.com/embed/<%= @movie.youtube_url %>" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="予告編"></iframe>
+              </div>
+            </div>
           </div>
         </section>
       <% end %>

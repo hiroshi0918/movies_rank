@@ -1,30 +1,22 @@
 class Movie < ApplicationRecord
   has_one_attached :image
 
-  def image_url(*args)
-    if image.attached?
-      Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true)
-    elsif self[:image].present? && self[:image].to_s.start_with?('http')
-      self[:image]
-    else
-      "https://via.placeholder.com/300x450/333333/ffffff?text=No+Poster"
-    end
-  end
-  
   belongs_to :user
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_users, through: :likes, source: :user
 
-  validates :title, :director, :category, :image, :user, presence: true
+  validates :title, :director, :category, :user, presence: true
   validates :youtube_url, format: { with: /\A[a-zA-Z0-9_-]{11}\z/, message: "はYouTubeの動画IDまたはURLを入力してください" }, allow_blank: true
 
   before_validation :normalize_youtube_url
+  validate :poster_present
 
   def self.search(search)
     return all unless search.present?
 
-    where('title LIKE ?', "%#{sanitize_sql_like(search)}%")
+    keyword = "%#{sanitize_sql_like(search)}%"
+    where("title LIKE :keyword OR original_title LIKE :keyword", keyword: keyword)
   end
 
   def self.create_all_ranks
@@ -36,6 +28,12 @@ class Movie < ApplicationRecord
   end
 
   private
+
+  def poster_present
+    return if image.attached? || poster_source_url.present?
+
+    errors.add(:image, "を設定してください")
+  end
 
   def normalize_youtube_url
     return if youtube_url.blank?

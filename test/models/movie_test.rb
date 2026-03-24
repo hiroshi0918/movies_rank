@@ -21,6 +21,7 @@ class MovieTest < ActiveSupport::TestCase
   end
 
   test 'search by title' do
+    assert_includes Movie.search('インセプション'), movies(:one)
     assert_includes Movie.search('Inception'), movies(:one)
     assert_not_includes Movie.search('Inception'), movies(:two)
     assert_equal Movie.count, Movie.search('').count

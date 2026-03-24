@@ -62,7 +62,7 @@ class MoviesController < ApplicationController
 
   private
   def movie_params
-    params.require(:movie).permit(:title, :director, :category, :image, :detail, :youtube_url)
+    params.require(:movie).permit(:title, :original_title, :director, :category, :image, :detail, :youtube_url)
   end
 
   def set_movie

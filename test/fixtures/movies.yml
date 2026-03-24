@@ -1,25 +1,28 @@
 one:
-  title: Inception
+  title: インセプション
+  original_title: Inception
   director: Christopher Nolan
   category: SF
-  image: inception.jpg
+  poster_source_url: inception.jpg
   detail: Dream within a dream.
   user: one
   youtube_url: dQw4w9WgXcQ
 
 two:
-  title: Interstellar
+  title: インターステラー
+  original_title: Interstellar
   director: Christopher Nolan
   category: SF
-  image: interstellar.jpg
+  poster_source_url: interstellar.jpg
   detail: Space exploration.
   user: two
   youtube_url: 5NV6Rdv1a3I
 
 three:
-  title: Arrival
+  title: メッセージ
+  original_title: Arrival
   director: Denis Villeneuve
   category: SF
-  image: arrival.jpg
+  poster_source_url: arrival.jpg
   detail: First contact.
   user: one

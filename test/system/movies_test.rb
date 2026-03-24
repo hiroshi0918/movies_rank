@@ -20,8 +20,8 @@ class MoviesTest < ApplicationSystemTestCase
     fill_in "keyword", with: "Inception"
     click_button "検索"
 
-    assert_current_path search_movies_path(keyword: "Inception")
-    assert_selector ".movie-card__title", text: /Inception/i, visible: :all
+    assert_current_path search_movies_path, ignore_query: true
+    assert_selector ".movie-card__title", text: /インセプション/i, visible: :all
   end
 
   test "viewing movie details and trailer" do
@@ -35,6 +35,8 @@ class MoviesTest < ApplicationSystemTestCase
     visit movie_path(@movie)
 
     assert_selector "h1", text: @movie.title
+    assert_text "原題: #{@movie.original_title}"
+    assert_selector ".detail-video-card"
     assert_selector "iframe[title='予告編']"
     assert_link "YouTubeで開く"
   end

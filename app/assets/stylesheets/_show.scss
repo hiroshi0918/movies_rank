@@ -83,6 +83,8 @@
 
 .detail-body {
   padding-top: 8px;
+  width: 100%;
+  max-width: 780px;
 
   &__eyebrow {
     color: var(--nf-red);
@@ -99,6 +101,13 @@
     line-height: 1.05;
     color: var(--nf-white);
     margin-bottom: 18px;
+  }
+
+  &__original-title {
+    margin-bottom: 16px;
+    color: var(--nf-white-muted);
+    font-size: 14px;
+    letter-spacing: 0.04em;
   }
 
   &__meta {
@@ -171,14 +180,43 @@
   }
 }
 
+.detail-section--trailer {
+  max-width: 620px;
+}
+
+.detail-video-card {
+  padding: 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)),
+    linear-gradient(135deg, rgba(229, 9, 20, 0.18), rgba(20, 20, 20, 0.94) 34%);
+  box-shadow: 0 28px 52px rgba(0, 0, 0, 0.28);
+}
+
+.detail-video-card__header {
+  margin-bottom: 16px;
+}
+
+.detail-video-card__body {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.detail-video {
+  width: 100%;
+  max-width: 560px;
+  border-radius: 18px;
+  overflow: hidden;
+  background-color: #0f0f0f;
+}
+
 .detail-video iframe {
   width: 100%;
   display: block;
   aspect-ratio: 16 / 9;
   border: none;
-  border-radius: 18px;
   background-color: #0f0f0f;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.24);
 }
 
 .comments-section {
@@ -291,6 +329,12 @@
 @media (max-width: 800px) {
   .detail-layout {
     grid-template-columns: 1fr;
+  }
+
+  .detail-body,
+  .detail-section--trailer,
+  .detail-video {
+    max-width: none;
   }
 
   .detail-poster {

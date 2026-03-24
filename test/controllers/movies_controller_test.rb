@@ -22,11 +22,12 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
   test "index paginates movies" do
     rows = 30.times.map do |i|
       {
-        title: "Movie #{i}",
+        title: "映画 #{i}",
+        original_title: "Movie #{i}",
         director: "Director #{i}",
         category: "Drama",
         detail: "detail #{i}",
-        image: "https://example.com/poster-#{i}.jpg",
+        poster_source_url: "https://example.com/poster-#{i}.jpg",
         user_id: @user.id,
         created_at: Time.current + i.minutes,
         updated_at: Time.current + i.minutes
@@ -55,7 +56,7 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
     get search_movies_url, params: { keyword: 'Inception' }
 
     assert_response :success
-    assert_select '.movie-card__title', text: 'Inception'
+    assert_select '.movie-card__title', text: 'インセプション'
   end
 
   test "should search movies via json" do
@@ -65,6 +66,7 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
     json_response = JSON.parse(response.body)
     assert_kind_of Array, json_response
     assert_equal @movie.title, json_response.first['title']
+    assert_equal @movie.original_title, json_response.first['original_title']
     assert_match(/movie_placeholder/, json_response.first['image'])
   end
 
@@ -73,6 +75,8 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select 'h1', text: @movie.title
+    assert_select '.detail-body__original-title', text: /#{Regexp.escape(@movie.original_title)}/
+    assert_select '.detail-video-card', 1
     assert_select 'iframe[title="予告編"]', 1
     assert_select 'a', text: 'YouTubeで開く'
   end
@@ -81,6 +85,7 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
     get movie_url(@movie_without_trailer)
 
     assert_response :success
+    assert_select '.detail-video-card', 0
     assert_select 'iframe[title="予告編"]', 0
     assert_select 'a', text: 'YouTubeで開く', count: 0
   end

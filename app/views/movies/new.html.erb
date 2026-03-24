@@ -4,6 +4,7 @@
       <%= render 'layouts/error_messages', model: form.object %>
       <h3>新規映画投稿</h3>
       <%= form.text_field :title, placeholder: "映画タイトル", class: "container--name" %>
+      <%= form.text_field :original_title, placeholder: "原題（任意）", class: "container--name" %>
       <%= form.text_field :director, placeholder: "監督名", class: "container--director" %>
       <%= form.text_field :category, placeholder: "ジャンル", class: "container--category" %>
       <%= form.text_field :youtube_url, placeholder: "YouTubeのURL", class: "container--youtube" %>

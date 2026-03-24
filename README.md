@@ -52,8 +52,8 @@
 
 
 <img width="1000" height="1312" alt="スクリーンショット 0008-03-24 11 23 07" src="https://github.com/user-attachments/assets/732c75f1-d02c-428d-a4b4-4a53088a0dd1" />
-<img width="500" height="1312" alt="スクリーンショット 0008-03-24 11 23 19" src="https://github.com/user-attachments/assets/29bd1715-b763-410c-b67b-25c0c892ccbd" />
-<img width="500" height="1312" alt="スクリーンショット 0008-03-24 11 23 34" src="https://github.com/user-attachments/assets/29122c73-133c-48f1-bc8d-83e52d814034" />
+<img width="400" height="1312" alt="スクリーンショット 0008-03-24 11 23 19" src="https://github.com/user-attachments/assets/29bd1715-b763-410c-b67b-25c0c892ccbd" />
+<img width="400" height="1312" alt="スクリーンショット 0008-03-24 11 23 34" src="https://github.com/user-attachments/assets/29122c73-133c-48f1-bc8d-83e52d814034" />
 
 ---
 

@@ -2,28 +2,30 @@
 // Ranking Grid Page - Enhanced
 // ============================
 
-.grid-page {
-  padding: calc(var(--nf-header-height) + 60px) 4% 80px;
-  min-height: 100vh;
-  background-color: var(--nf-black);
-  position: relative;
+.rank-page {
+  &.grid-page {
+    padding: calc(var(--nf-header-height) + 60px) 4% 80px;
+    min-height: 100vh;
+    background-color: var(--nf-black);
+    position: relative;
 
-  // Background decorations
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 50% 0%, rgba(229, 9, 20, 0.1) 0%, transparent 40%),
-      radial-gradient(circle at 0% 50%, rgba(229, 9, 20, 0.05) 0%, transparent 30%),
-      radial-gradient(circle at 100% 50%, rgba(229, 9, 20, 0.05) 0%, transparent 30%);
-    pointer-events: none;
+    // Background decorations
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(229, 9, 20, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 0% 50%, rgba(229, 9, 20, 0.05) 0%, transparent 30%),
+        radial-gradient(circle at 100% 50%, rgba(229, 9, 20, 0.05) 0%, transparent 30%);
+      pointer-events: none;
+    }
   }
 
-  &__title {
+  .grid-page__title {
     font-size: clamp(32px, 5vw, 48px);
     font-weight: 900;
     color: var(--nf-white);
@@ -81,7 +83,7 @@
   }
 }
 
-.grid-container {
+.rank-page .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 28px;
@@ -91,7 +93,7 @@
   z-index: 1;
 }
 
-.rank-grid-item {
+.rank-page .rank-grid-item {
   position: relative;
   animation: card-fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
 
@@ -177,7 +179,7 @@
   }
 }
 
-.grid-card {
+.rank-page .grid-card {
   display: block;
   position: relative;
   border-radius: var(--nf-radius-xl);
@@ -276,28 +278,30 @@
 
 // Responsive adjustments
 @media (max-width: 768px) {
-  .grid-page {
-    padding: calc(var(--nf-header-height) + 40px) 4% 60px;
+  .rank-page {
+    &.grid-page {
+      padding: calc(var(--nf-header-height) + 40px) 4% 60px;
+    }
 
-    &__title {
+    .grid-page__title {
       margin-bottom: 36px;
     }
-  }
 
-  .grid-container {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-  }
+    .grid-container {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
 
-  .rank-grid-item .rank-badge {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-    top: -8px;
-    left: -8px;
-  }
+    .rank-grid-item .rank-badge {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+      top: -8px;
+      left: -8px;
+    }
 
-  .grid-card__title {
-    font-size: 16px;
+    .grid-card__title {
+      font-size: 16px;
+    }
   }
 }

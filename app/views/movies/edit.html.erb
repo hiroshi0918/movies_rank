@@ -9,7 +9,6 @@
       <%= form.text_field :youtube_url, placeholder: "YouTubeのURL", class: "container--youtube" %>
       <%= form.text_area :detail, placeholder: "映画詳細", rows: "10", class: "container--detail" %>
       <%= form.label :image, class: 'container--image' do %>
-        <%= icon('fas', 'image', class: 'icon') %>
         <span>画像を変更</span>
         <%= form.file_field :image, class: 'hidden' %>
       <% end %>

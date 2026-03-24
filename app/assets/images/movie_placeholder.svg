@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Poster Placeholder</title>
+  <desc id="desc">Movie poster placeholder image</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b1b1b"/>
+      <stop offset="100%" stop-color="#2b1214"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="900" fill="url(#bg)"/>
+  <rect x="66" y="84" width="468" height="732" rx="26" fill="none" stroke="#5a5a5a" stroke-width="4" stroke-dasharray="14 16"/>
+  <rect x="126" y="206" width="348" height="258" rx="18" fill="#231f20" stroke="#7a2024" stroke-width="6"/>
+  <path d="M170 430l74-92 64 74 48-56 74 88" fill="none" stroke="#d63b44" stroke-linecap="round" stroke-linejoin="round" stroke-width="20"/>
+  <circle cx="250" cy="286" r="32" fill="#d63b44"/>
+  <text x="300" y="590" fill="#f4f4f4" font-family="Helvetica, Arial, sans-serif" font-size="56" font-weight="700" text-anchor="middle">NO POSTER</text>
+  <text x="300" y="654" fill="#b9b9b9" font-family="Helvetica, Arial, sans-serif" font-size="28" text-anchor="middle">画像を読み込めませんでした</text>
+</svg>

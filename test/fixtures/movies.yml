@@ -15,3 +15,11 @@ two:
   detail: Space exploration.
   user: two
   youtube_url: 5NV6Rdv1a3I
+
+three:
+  title: Arrival
+  director: Denis Villeneuve
+  category: SF
+  image: arrival.jpg
+  detail: First contact.
+  user: one

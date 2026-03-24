@@ -1,23 +1,17 @@
-<div class="grid-page rank-page">
-  <h2 class="grid-page__title">TOP 10 ランキング</h2>
-  <div class="grid-container">
-    <% @all_ranks.each_with_index do |movie, i| %>
-      <div class="rank-grid-item">
-        <div class="rank-badge"><%= i + 1 %></div>
-        <%= link_to movie_path(movie), class: "grid-card" do %>
-          <%= image_tag movie.image_url, class: "grid-card__image", alt: movie.title %>
-          <div class="grid-card__overlay">
-            <div class="grid-card__title"><%= movie.title %></div>
-            <div class="grid-card__meta">
-              <span class="likes">
-                <i class="fa fa-heart"></i>
-                <%= movie.likes_total %>
-              </span>
-              <span class="category"><%= movie.category %></span>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+<div class="catalog-page">
+  <section class="catalog-page__intro catalog-page__intro--compact">
+    <p class="catalog-page__eyebrow">ランキング</p>
+    <h1 class="catalog-page__title">人気ランキング</h1>
+    <p class="catalog-page__description">いいね数が多い映画を上位10件まで表示しています。</p>
+  </section>
+
+  <% if @all_ranks.present? %>
+    <div class="movie-grid movie-grid--ranked">
+      <% @all_ranks.each_with_index do |movie, index| %>
+        <%= render partial: "movie_card", locals: { movie: movie, rank: index + 1 } %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="catalog-page__empty">ランキング対象の映画はまだありません</p>
+  <% end %>
 </div>

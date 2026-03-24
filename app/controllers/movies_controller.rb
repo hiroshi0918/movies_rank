@@ -4,12 +4,7 @@ class MoviesController < ApplicationController
   before_action :authorize_movie_owner!, only: [:edit, :update, :destroy]
 
   def index
-    @all_ranks = Movie.create_all_ranks
-    @hero_movie = @all_ranks.first || Movie.order(created_at: :desc).first
-    @trending_movies = Movie.order(created_at: :desc).limit(12)
-    @animation_movies = Movie.where(category: 'Animation').limit(12)
-    @action_movies = Movie.where(category: 'Action').limit(12)
-    @drama_movies = Movie.where(category: 'Drama').limit(12)
+    @movies = Movie.order(created_at: :desc).page(params[:page])
   end
 
   def new
@@ -47,10 +42,16 @@ class MoviesController < ApplicationController
   end
 
   def search
-    @movies = Movie.search(params[:keyword])
+    scope = Movie.search(params[:keyword]).order(created_at: :desc)
+
     respond_to do |format|
-      format.html
-      format.json{render action: :search}
+      format.html do
+        @movies = scope.page(params[:page])
+      end
+      format.json do
+        @movies = scope
+        render action: :search
+      end
     end
   end
 

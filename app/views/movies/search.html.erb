@@ -1,24 +1,22 @@
-<div class="grid-page">
-  <h2 class="grid-page__title">検索結果</h2>
+<div class="catalog-page">
+  <section class="catalog-page__intro catalog-page__intro--compact">
+    <p class="catalog-page__eyebrow">検索</p>
+    <h1 class="catalog-page__title">検索結果</h1>
+    <% if params[:keyword].present? %>
+      <p class="catalog-page__description">「<%= params[:keyword] %>」に一致する映画です。</p>
+    <% else %>
+      <p class="catalog-page__description">映画タイトルで気になる作品を探せます。</p>
+    <% end %>
+  </section>
+
   <% if @movies.present? %>
-    <div class="grid-container" data-search-target="list">
-      <% @movies.each do |movie| %>
-        <%= link_to movie_path(movie), class: "grid-card" do %>
-          <%= image_tag movie.image_url, class: "grid-card__image", alt: movie.title %>
-          <div class="grid-card__overlay">
-            <div class="grid-card__title"><%= movie.title %></div>
-            <div class="grid-card__meta">
-              <span class="likes">
-                <i class="fa fa-heart"></i>
-                <%= movie.likes_total %>
-              </span>
-              <span class="category"><%= movie.category %></span>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
+    <div class="movie-grid">
+      <%= render partial: "movie_card", collection: @movies, as: :movie %>
+    </div>
+    <div class="catalog-page__pagination">
+      <%= paginate @movies %>
     </div>
   <% else %>
-    <p class="grid-page__empty">検索結果が見つかりませんでした</p>
+    <p class="catalog-page__empty">検索結果が見つかりませんでした</p>
   <% end %>
 </div>

@@ -15,7 +15,7 @@
       <div class="profile-section__grid">
         <% @movies.each do |movie| %>
           <%= link_to movie_path(movie), class: "profile-movie-card" do %>
-            <%= image_tag movie.image_url, class: "profile-movie-card__image", alt: movie.title %>
+            <%= movie_poster_tag(movie, class_name: "profile-movie-card__image", alt: movie.title) %>
             <div class="profile-movie-card__overlay">
               <div class="profile-movie-card__title"><%= movie.title %></div>
               <div class="profile-movie-card__meta"><%= movie.category %></div>
@@ -34,7 +34,7 @@
       <div class="profile-section__grid">
         <% @user.liked_movies.each do |movie| %>
           <%= link_to movie_path(movie), class: "profile-movie-card" do %>
-            <%= image_tag movie.image_url, class: "profile-movie-card__image", alt: movie.title %>
+            <%= movie_poster_tag(movie, class_name: "profile-movie-card__image", alt: movie.title) %>
             <div class="profile-movie-card__overlay">
               <div class="profile-movie-card__title"><%= movie.title %></div>
               <div class="profile-movie-card__meta"><%= movie.category %></div>

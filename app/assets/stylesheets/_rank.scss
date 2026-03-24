@@ -1,0 +1,307 @@
+// ============================
+// Ranking Grid Page - Enhanced
+// ============================
+
+.rank-page {
+  &.grid-page {
+    padding: calc(var(--nf-header-height) + 60px) 4% 80px;
+    min-height: 100vh;
+    background-color: var(--nf-black);
+    position: relative;
+
+    // Background decorations
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(229, 9, 20, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 0% 50%, rgba(229, 9, 20, 0.05) 0%, transparent 30%),
+        radial-gradient(circle at 100% 50%, rgba(229, 9, 20, 0.05) 0%, transparent 30%);
+      pointer-events: none;
+    }
+  }
+
+  .grid-page__title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 900;
+    color: var(--nf-white);
+    margin-bottom: 50px;
+    text-align: center;
+    letter-spacing: -1px;
+    position: relative;
+    z-index: 1;
+    animation: title-fade-in 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+    // Crown icon effect
+    &::before {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--nf-gold), var(--nf-orange));
+      border-radius: 50%;
+      box-shadow: 0 0 40px var(--nf-gold-glow);
+      animation: crown-pulse 2s ease-in-out infinite;
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      width: 120px;
+      height: 4px;
+      margin: 16px auto 0;
+      background: linear-gradient(90deg, transparent, var(--nf-red), transparent);
+      border-radius: 2px;
+    }
+  }
+}
+
+@keyframes title-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes crown-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 40px var(--nf-gold-glow);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 60px var(--nf-gold-glow);
+  }
+}
+
+.rank-page .grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 28px;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.rank-page .rank-grid-item {
+  position: relative;
+  animation: card-fade-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.08}s;
+    }
+  }
+
+  .rank-badge {
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--nf-white);
+    z-index: 10;
+    border-radius: 50%;
+    font-family: var(--nf-font);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    // Top 3 special styling
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      z-index: -1;
+    }
+  }
+
+  // Gold for #1
+  &:nth-child(1) .rank-badge {
+    background: linear-gradient(135deg, #ffd700, #ffb700, #ff9500);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5), 0 4px 20px rgba(0, 0, 0, 0.4);
+    font-size: 24px;
+    width: 56px;
+    height: 56px;
+  }
+
+  // Silver for #2
+  &:nth-child(2) .rank-badge {
+    background: linear-gradient(135deg, #e0e0e0, #c0c0c0, #a0a0a0);
+    box-shadow: 0 0 25px rgba(192, 192, 192, 0.5), 0 4px 20px rgba(0, 0, 0, 0.4);
+    font-size: 22px;
+    width: 52px;
+    height: 52px;
+  }
+
+  // Bronze for #3
+  &:nth-child(3) .rank-badge {
+    background: linear-gradient(135deg, #cd7f32, #b8722d, #a56528);
+    box-shadow: 0 0 25px rgba(205, 127, 50, 0.5), 0 4px 20px rgba(0, 0, 0, 0.4);
+    font-size: 22px;
+    width: 52px;
+    height: 52px;
+  }
+
+  // Rest of rankings
+  &:nth-child(n+4) .rank-badge {
+    background: linear-gradient(135deg, var(--nf-red), var(--nf-red-hover));
+    box-shadow: 0 0 20px var(--nf-red-glow), 0 4px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  &:hover .rank-badge {
+    transform: scale(1.15) rotate(-5deg);
+  }
+}
+
+@keyframes card-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.rank-page .grid-card {
+  display: block;
+  position: relative;
+  border-radius: var(--nf-radius-xl);
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: linear-gradient(135deg, var(--nf-dark-card), var(--nf-dark));
+  border: 1px solid var(--nf-glass-border);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(229, 9, 20, 0.1) 100%);
+    opacity: 0;
+    transition: opacity var(--nf-transition);
+    z-index: 1;
+  }
+
+  &:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 0 50px var(--nf-red-glow), var(--nf-shadow-lg);
+    border-color: rgba(229, 9, 20, 0.3);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .grid-card__image {
+      transform: scale(1.08);
+    }
+
+    .grid-card__overlay {
+      background: linear-gradient(to top, rgba(10, 10, 10, 0.98) 0%, rgba(10, 10, 10, 0.8) 60%, transparent 100%);
+    }
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.6) 40%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    transition: background var(--nf-transition);
+    z-index: 2;
+  }
+
+  &__title {
+    color: var(--nf-white);
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    line-height: 1.3;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+
+    .likes {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--nf-red);
+      font-weight: 700;
+
+      i {
+        font-size: 16px;
+        animation: pulse-heart 1.5s ease infinite;
+      }
+    }
+
+    .category {
+      color: var(--nf-white);
+      padding: 4px 12px;
+      background: var(--nf-glass);
+      border: 1px solid var(--nf-glass-border);
+      border-radius: var(--nf-radius);
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .rank-page {
+    &.grid-page {
+      padding: calc(var(--nf-header-height) + 40px) 4% 60px;
+    }
+
+    .grid-page__title {
+      margin-bottom: 36px;
+    }
+
+    .grid-container {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .rank-grid-item .rank-badge {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+      top: -8px;
+      left: -8px;
+    }
+
+    .grid-card__title {
+      font-size: 16px;
+    }
+  }
+}

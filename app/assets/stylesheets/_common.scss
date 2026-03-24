@@ -1,31 +1,45 @@
 // ============================
-// Netflix Design System
+// Netflix Design System - Enhanced
 // ============================
 
 // CSS Custom Properties
 :root {
-  --nf-black: #141414;
-  --nf-dark: #181818;
-  --nf-dark-card: #222;
-  --nf-gray: #333;
-  --nf-gray-light: #444;
-  --nf-gray-text: #999;
+  --nf-black: #0a0a0a;
+  --nf-dark: #141414;
+  --nf-dark-card: #1a1a1a;
+  --nf-gray: #2a2a2a;
+  --nf-gray-light: #3a3a3a;
+  --nf-gray-text: #8a8a8a;
   --nf-white: #fff;
   --nf-white-soft: #e5e5e5;
   --nf-white-muted: #a3a3a3;
   --nf-red: #e50914;
-  --nf-red-hover: #b20710;
+  --nf-red-hover: #f40612;
+  --nf-red-glow: rgba(229, 9, 20, 0.4);
   --nf-green: #46d369;
+  --nf-green-glow: rgba(70, 211, 105, 0.3);
   --nf-orange: #e87c03;
   --nf-gold: #f5c518;
-  --nf-radius: 4px;
-  --nf-radius-lg: 8px;
-  --nf-transition: 0.3s ease;
+  --nf-gold-glow: rgba(245, 197, 24, 0.3);
+  --nf-radius: 6px;
+  --nf-radius-lg: 12px;
+  --nf-radius-xl: 16px;
+  --nf-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --nf-transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   --nf-header-height: 68px;
   --nf-font: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --nf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --nf-shadow-md: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --nf-shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.7);
+  --nf-glass: rgba(255, 255, 255, 0.05);
+  --nf-glass-border: rgba(255, 255, 255, 0.1);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   background-color: var(--nf-black);
@@ -34,6 +48,12 @@ body {
   font-family: var(--nf-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+// Smooth page load
+html {
+  scroll-behavior: smooth;
 }
 
 // Custom scrollbar
@@ -59,75 +79,109 @@ body {
   color: var(--nf-white);
 }
 
-// Flash notifications — Netflix-style snackbar
+// Flash notifications — Enhanced snackbar
 .notifications {
   position: fixed;
-  top: calc(var(--nf-header-height) + 10px);
+  top: calc(var(--nf-header-height) + 16px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 9999;
   width: auto;
-  min-width: 300px;
+  min-width: 320px;
   max-width: 600px;
 
   .notice, .alert {
-    padding: 14px 28px;
-    margin-bottom: 10px;
+    padding: 16px 32px;
+    margin-bottom: 12px;
     border-radius: var(--nf-radius-lg);
     text-align: center;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.3px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    animation: snackbar-in 0.4s ease;
-    backdrop-filter: blur(10px);
+    box-shadow: var(--nf-shadow-lg);
+    animation: snackbar-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 
   .notice {
-    background-color: rgba(70, 211, 105, 0.15);
+    background: linear-gradient(135deg, rgba(70, 211, 105, 0.2), rgba(70, 211, 105, 0.1));
     color: var(--nf-green);
-    border: 1px solid rgba(70, 211, 105, 0.3);
+    border: 1px solid rgba(70, 211, 105, 0.4);
+    box-shadow: var(--nf-shadow-lg), 0 0 40px var(--nf-green-glow);
   }
 
   .alert {
-    background-color: rgba(229, 9, 20, 0.15);
+    background: linear-gradient(135deg, rgba(229, 9, 20, 0.2), rgba(229, 9, 20, 0.1));
     color: #ff6b6b;
-    border: 1px solid rgba(229, 9, 20, 0.3);
+    border: 1px solid rgba(229, 9, 20, 0.4);
+    box-shadow: var(--nf-shadow-lg), 0 0 40px var(--nf-red-glow);
   }
 }
 
 @keyframes snackbar-in {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(-20px);
+    transform: translateX(-50%) translateY(-30px) scale(0.9);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(0) scale(1);
   }
 }
 
 // Error messages (forms)
 .error-messages {
-  background-color: rgba(229, 9, 20, 0.1);
+  background: linear-gradient(135deg, rgba(229, 9, 20, 0.15), rgba(229, 9, 20, 0.08));
   color: #ff6b6b;
-  padding: 15px 20px;
-  margin-bottom: 20px;
-  border: 1px solid rgba(229, 9, 20, 0.3);
-  border-radius: var(--nf-radius);
+  padding: 18px 24px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  border-radius: var(--nf-radius-lg);
   font-size: 14px;
+  backdrop-filter: blur(10px);
   ul {
     margin: 0;
     padding-left: 20px;
+    li {
+      margin-bottom: 4px;
+    }
   }
 }
 
 // Smooth page transitions
 .main-content {
-  animation: fade-in 0.5s ease;
+  animation: page-in 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes page-in {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Utility classes
+.glass-effect {
+  background: var(--nf-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--nf-glass-border);
+}
+
+.glow-red {
+  box-shadow: 0 0 30px var(--nf-red-glow);
+}
+
+.glow-green {
+  box-shadow: 0 0 30px var(--nf-green-glow);
 }

@@ -5,7 +5,7 @@
 
 <div class="show-content">
   <div class="show-poster">
-    <%= image_tag @movie.image_url, class: "show-poster__image", alt: @movie.title %>
+    <%= image_tag @movie.image_url, class: "show-poster__image", alt: @movie.title, loading: "lazy" %>
     <% if user_signed_in? && current_user == @movie.user %>
       <div class="show-poster__actions">
         <%= link_to "編集", edit_movie_path(@movie.id), class: "btn-edit" %>
@@ -30,6 +30,9 @@
 
   <div class="show-details">
     <h1 class="show-details__title"><%= @movie.title %></h1>
+    <% if @movie.original_title.present? && @movie.original_title != @movie.title %>
+      <p class="show-details__original-title">原題: <%= @movie.original_title %></p>
+    <% end %>
     <div class="show-details__meta">
       <span class="show-details__match"><i class="fa fa-heart" aria-hidden="true"></i> <%= @movie.likes_total %></span>
       <span class="show-details__tag"><%= @movie.category %></span>
@@ -45,8 +48,12 @@
       </div>
     <% end %>
     <% if @movie.youtube_url.present? %>
-      <div class="show-details__video">
-        <iframe width="100%" height="400" src="https://www.youtube.com/embed/<%= @movie.youtube_url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true" title="movie trailer"></iframe>
+      <div class="show-details__section show-details__video">
+        <div class="show-details__video-head">
+          <h3 class="show-details__section-title">予告編</h3>
+          <%= link_to "YouTubeで開く", "https://www.youtube.com/watch?v=#{@movie.youtube_url}", target: "_blank", rel: "noopener", class: "show-details__video-link" %>
+        </div>
+        <iframe width="100%" height="400" src="https://www.youtube.com/embed/<%= @movie.youtube_url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true" title="予告編"></iframe>
       </div>
     <% end %>
   </div>

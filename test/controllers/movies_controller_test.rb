@@ -4,16 +4,28 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
     @movie = movies(:one)
+    @movie_without_trailer = movies(:three)
   end
 
   test "should get index" do
     get root_url
+
     assert_response :success
+    # Netflix風ホーム: 横スクロール行＋カード。死リンク・偽データが無いこと。
+    assert_select '.movie-card', minimum: 1
+    assert_select 'a[href="#"]', count: 0
+    assert_select '*', text: /98% マッチ/, count: 0
   end
 
   test "should get rank" do
+    @movie.update_columns(likes_count: 5)
+    movies(:two).update_columns(likes_count: 3)
+
     get rank_movies_url
+
     assert_response :success
+    assert_select '.grid-page__title', text: /ランキング/
+    assert_select '.rank-badge', text: '1'
   end
 
   test "should get catalog" do
@@ -38,23 +50,42 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should search movies" do
+  test "should search movies by original title" do
     get search_movies_url, params: { keyword: 'Inception' }
+
     assert_response :success
-    assert_select '.grid-card__title', text: 'Inception'
+    assert_select '.grid-card__title', text: 'インセプション'
   end
 
   test "should search movies via json" do
     get search_movies_url(format: :json), params: { keyword: 'Inception' }
+
     assert_response :success
     json_response = JSON.parse(response.body)
     assert_kind_of Array, json_response
     assert_equal @movie.title, json_response.first['title']
+    assert_equal @movie.original_title, json_response.first['original_title']
+    assert_match(/movie_placeholder/, json_response.first['image'])
   end
 
-  test "should show movie" do
+  test "should show movie with trailer" do
     get movie_url(@movie)
+
     assert_response :success
+    assert_select '.show-details__title', text: @movie.title
+    assert_select '.show-details__original-title', text: /#{Regexp.escape(@movie.original_title)}/
+    assert_select '.show-details__video', 1
+    assert_select 'iframe[title="予告編"]', 1
+    assert_select 'a', text: 'YouTubeで開く'
+  end
+
+  test "should hide trailer section when youtube is absent" do
+    get movie_url(@movie_without_trailer)
+
+    assert_response :success
+    assert_select '.show-details__video', 0
+    assert_select 'iframe[title="予告編"]', 0
+    assert_select 'a', text: 'YouTubeで開く', count: 0
   end
 
   test "guest should not get new" do
@@ -73,14 +104,14 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
     image = fixture_file_upload(Rails.root.join('public/apple-touch-icon.png'), 'image/png')
     assert_difference('Movie.count', 1) do
       post movies_url, params: { movie: {
-        title: '新作', director: '監督', category: 'アクション', detail: 'あらすじ', image: image
+        title: '新作', original_title: 'New Movie', director: '監督', category: 'アクション', detail: 'あらすじ', image: image
       } }
     end
     assert_redirected_to root_path
   end
 
   test "owner can update title without re-uploading image" do
-    # 文字列カラムに画像URLを持つだけ(添付なし)の映画でも、画像を再アップロードせず編集できる
+    # 外部URL文字列(poster_source_url)を持つだけ(添付なし)の映画でも、画像を再アップロードせず編集できる
     sign_in @user
     patch movie_url(@movie), params: { movie: { title: '改題' } }
     assert_redirected_to movie_path(@movie.id)

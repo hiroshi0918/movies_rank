@@ -64,8 +64,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_14_024027) do
     t.datetime "created_at", precision: nil, null: false
     t.text "detail", size: :medium
     t.string "director", null: false
-    t.string "image"
     t.integer "likes_count", default: 0, null: false
+    t.string "original_title"
+    t.string "poster_source_url"
     t.string "title", null: false
     t.datetime "updated_at", precision: nil, null: false
     t.bigint "user_id", null: false

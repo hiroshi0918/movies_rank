@@ -52,10 +52,10 @@ class MoviesController < ApplicationController
   end
 
   def search
-    @movies = Movie.search(params[:keyword]).with_attached_image
+    @movies = Movie.search(params[:keyword]).with_attached_image.order(created_at: :desc)
     respond_to do |format|
       format.html
-      format.json{render action: :search}
+      format.json { render action: :search }
     end
   end
 
@@ -83,7 +83,7 @@ class MoviesController < ApplicationController
 
   private
   def movie_params
-    params.require(:movie).permit(:title, :director, :category, :image, :detail, :youtube_url)
+    params.require(:movie).permit(:title, :original_title, :director, :category, :image, :detail, :youtube_url)
   end
 
   # DBに実在するカテゴリのうち、投稿数が多い上位を行として返す。

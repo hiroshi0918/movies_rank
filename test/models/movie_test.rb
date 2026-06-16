@@ -21,6 +21,7 @@ class MovieTest < ActiveSupport::TestCase
   end
 
   test 'search by title' do
+    assert_includes Movie.search('インセプション'), movies(:one)
     assert_includes Movie.search('Inception'), movies(:one)
     assert_not_includes Movie.search('Inception'), movies(:two)
   end
@@ -31,11 +32,11 @@ class MovieTest < ActiveSupport::TestCase
     assert_equal 0, Movie.search(nil).count
   end
 
-  test 'image presence accepts legacy string url without attachment' do
-    # シード投入済み映画は文字列カラムにURLを持つだけで添付が無い。
+  test 'image presence accepts external url without attachment' do
+    # 取込/シード済み映画は poster_source_url にURLを持つだけで添付が無い。
     # この状態でも有効(=画像を再アップロードせずに編集できる)であることを担保する。
     movie = Movie.new(title: 'T', director: 'D', category: 'C', user: users(:one))
-    movie[:image] = 'https://example.com/poster.jpg' # レガシー文字列カラム(seedと同等)
+    movie.poster_source_url = 'https://example.com/poster.jpg'
     assert movie.valid?, movie.errors.full_messages.to_sentence
   end
 

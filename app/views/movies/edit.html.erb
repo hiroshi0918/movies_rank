@@ -5,6 +5,8 @@
       <h3>映画投稿の編集</h3>
       <%= form.label :title, "映画タイトル", class: "visually-hidden" %>
       <%= form.text_field :title, placeholder: "映画タイトル", class: "container--name" %>
+      <%= form.label :original_title, "原題（任意）", class: "visually-hidden" %>
+      <%= form.text_field :original_title, placeholder: "原題（任意）", class: "container--name" %>
       <%= form.label :director, "監督名", class: "visually-hidden" %>
       <%= form.text_field :director, placeholder: "監督名", class: "container--director" %>
       <%= form.label :category, "ジャンル", class: "visually-hidden" %>
@@ -19,7 +21,6 @@
         <% end %>
       </datalist>
       <%= form.label :image, class: 'container--image' do %>
-        <%= icon('fas', 'image', class: 'icon') %>
         <span>画像を変更</span>
         <%= form.file_field :image, class: 'hidden' %>
       <% end %>

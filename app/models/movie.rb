@@ -15,8 +15,8 @@ class Movie < ApplicationRecord
   def image_url(*args)
     if image.attached?
       Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true)
-    elsif self[:image].present? && self[:image].to_s.start_with?('http')
-      self[:image]
+    elsif poster_source_url.present? && poster_source_url.to_s.start_with?('http')
+      poster_source_url
     else
       PLACEHOLDER_IMAGE
     end
@@ -29,9 +29,9 @@ class Movie < ApplicationRecord
 
   validates :title, :director, :category, :user, presence: true
   validates :youtube_url, format: { with: /\A[a-zA-Z0-9_-]{11}\z/, message: "はYouTubeの動画IDまたはURLを入力してください" }, allow_blank: true
-  # ActiveStorage添付(image)か、レガシー文字列カラム(self[:image]/外部URL)のどちらかがあればOK。
-  # 文字列カラムにURLを持つシード投入済み映画でも、画像を再アップロードせず編集できるようにする。
-  validate :image_must_be_present
+  # ActiveStorage添付(image)か、外部URL文字列(poster_source_url)のどちらかがあればOK。
+  # 文字列カラムにURLを持つシード/取込済み映画でも、画像を再アップロードせず編集できるようにする。
+  validate :poster_present
 
   before_validation :normalize_youtube_url
 
@@ -39,7 +39,8 @@ class Movie < ApplicationRecord
     # 空キーワードでは全件を返さない(全件ロード/意図しない一覧化を避ける)。
     return none unless search.present?
 
-    where('title LIKE ?', "%#{sanitize_sql_like(search)}%")
+    keyword = "%#{sanitize_sql_like(search)}%"
+    where("title LIKE :keyword OR original_title LIKE :keyword", keyword: keyword)
   end
 
   def self.create_all_ranks
@@ -52,8 +53,8 @@ class Movie < ApplicationRecord
 
   private
 
-  def image_must_be_present
-    return if image.attached? || self[:image].present?
+  def poster_present
+    return if image.attached? || poster_source_url.present?
 
     errors.add(:image, :blank)
   end

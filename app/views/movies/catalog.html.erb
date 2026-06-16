@@ -1,0 +1,46 @@
+<div class="grid-page catalog-page">
+  <h2 class="grid-page__title">映画一覧</h2>
+
+  <%= form_with url: catalog_movies_path, method: :get, class: "catalog-filters", data: { controller: "auto-submit" } do %>
+    <div class="catalog-filters__group">
+      <%= label_tag :category, "カテゴリ", class: "catalog-filters__label" %>
+      <%= select_tag :category,
+            options_for_select([["すべて", ""]] + @categories.map { |c| [c, c] }, @category),
+            class: "catalog-filters__select",
+            data: { action: "change->auto-submit#submit" } %>
+    </div>
+    <div class="catalog-filters__group">
+      <%= label_tag :sort, "並び替え", class: "catalog-filters__label" %>
+      <%= select_tag :sort,
+            options_for_select(MoviesController::SORT_OPTIONS.map { |key, opt| [opt[:label], key] }, @sort),
+            class: "catalog-filters__select",
+            data: { action: "change->auto-submit#submit" } %>
+    </div>
+    <noscript><button type="submit" class="catalog-filters__apply">適用</button></noscript>
+  <% end %>
+
+  <% if @movies.any? %>
+    <div class="grid-container">
+      <% @movies.each do |movie| %>
+        <%= link_to movie_path(movie), class: "grid-card" do %>
+          <%= image_tag movie.image_url, class: "grid-card__image", alt: movie.title %>
+          <div class="grid-card__overlay">
+            <div class="grid-card__title"><%= movie.title %></div>
+            <div class="grid-card__meta">
+              <span class="likes">
+                <i class="fa fa-heart" aria-hidden="true"></i>
+                <%= movie.likes_total %>
+              </span>
+              <span class="category"><%= movie.category %></span>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <nav class="catalog-pagination" aria-label="ページ送り">
+      <%= paginate @movies %>
+    </nav>
+  <% else %>
+    <p class="grid-page__empty">該当する映画がありません</p>
+  <% end %>
+</div>

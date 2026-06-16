@@ -3,4 +3,5 @@ json.array! @movies do |movie|
   json.title movie.title
   json.image movie.image_url
   json.count movie.likes_total
+  json.category movie.category
 end

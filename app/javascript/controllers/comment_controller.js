@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["form", "input", "submit", "list"]
+  static targets = ["form", "input", "submit", "list", "empty"]
 
   submit(event) {
     event.preventDefault();
@@ -26,6 +26,8 @@ export default class extends Controller {
       return response.json();
     })
     .then(data => {
+      // 「まだレビューがありません」の空状態が残っていれば取り除く
+      if (this.hasEmptyTarget) this.emptyTarget.remove();
       this.listTarget.appendChild(this.buildCommentElement(data));
       this.inputTarget.value = "";
     })
@@ -55,6 +57,13 @@ export default class extends Controller {
 
     item.appendChild(userDiv);
     item.appendChild(textDiv);
+
+    if (comment.created_at) {
+      const dateDiv = document.createElement("div");
+      dateDiv.className = "comment-item__date";
+      dateDiv.textContent = comment.created_at;
+      item.appendChild(dateDiv);
+    }
 
     return item;
   }

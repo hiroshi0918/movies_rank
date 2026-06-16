@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
     <title>MoviesRank</title>
@@ -16,20 +16,21 @@
     <div class="header" data-controller="header">
       <div class="header__left">
         <%= link_to "MoviesRank", root_path, class: "title" %>
-        <div class="nav-links">
+        <nav class="nav-links" aria-label="メインナビゲーション">
           <%= link_to "ホーム", root_path, class: "nav-link" %>
-          <%= link_to "シリーズ", "#", class: "nav-link" %>
-          <%= link_to "映画", "#", class: "nav-link" %>
-          <%= link_to "新着&人気", "#", class: "nav-link" %>
-          <%= link_to "マイリスト", "#", class: "nav-link" %>
-        </div>
+          <%= link_to "映画一覧", catalog_movies_path, class: "nav-link" %>
+          <%= link_to "ランキング", rank_movies_path, class: "nav-link" %>
+          <% if user_signed_in? %>
+            <%= link_to "マイリスト", user_path(current_user), class: "nav-link" %>
+          <% end %>
+        </nav>
       </div>
       <div class="header__right">
         <div class="search-container">
           <%= form_with(url: search_movies_path, local: true, method: :get, class: "search-form", data: { action: "submit->search#performSearch" }) do |form| %>
-            <%= form.text_field :keyword, placeholder: "映画を検索する", class: "sbox", data: { search_target: "input", action: "keyup->search#performSearch" } %>
-            <button class="sbtn" type="submit">
-              <i class="fa fa-search"></i>
+            <%= form.text_field :keyword, placeholder: "映画を検索する", class: "sbox", "aria-label": "映画を検索する", data: { search_target: "input", action: "keyup->search#performSearch" } %>
+            <button class="sbtn" type="submit" aria-label="検索">
+              <i class="fa fa-search" aria-hidden="true"></i>
             </button>
           <% end %>
         </div>

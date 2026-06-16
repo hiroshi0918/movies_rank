@@ -9,6 +9,9 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_movies, through: :likes, source: :movie
 
+  # nicknameは表示名・プロフィール(users#show)で必須。空だと nil[0] 等で500になるため必須化する。
+  validates :nickname, presence: true, length: { maximum: 50 }
+
   def already_liked?(movie)
     likes.exists?(movie_id: movie.id)
   end

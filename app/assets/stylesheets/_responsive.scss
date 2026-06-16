@@ -1,0 +1,122 @@
+// ============================
+// Responsive — モバイル対応
+// アプリ全体でメディアクエリが _rank の1箇所しか無く、ヘッダー/詳細/フォーム等が
+// スマホで崩れていた。主要画面の破綻を集中的に補正する。
+// ============================
+
+@media (max-width: 768px) {
+  // --- Header: 縦2段に折り返し、検索を独立行に ---
+  .header {
+    height: auto;
+    min-height: var(--nf-header-height);
+    flex-wrap: wrap;
+    row-gap: 8px;
+    padding: 8px 16px;
+
+    &__left {
+      flex: 1 1 100%;
+      justify-content: space-between;
+      gap: 12px;
+      min-width: 0;
+
+      .title {
+        font-size: 22px;
+        margin-right: 0;
+        flex-shrink: 0;
+      }
+
+      .nav-links {
+        gap: 14px;
+        min-width: 0;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        scrollbar-width: none;
+        &::-webkit-scrollbar { display: none; }
+
+        .nav-link { font-size: 13px; padding: 4px 0; }
+      }
+    }
+
+    &__right {
+      flex: 1 1 100%;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: flex-start;
+
+      .search-container {
+        margin-right: 0;
+        flex: 1 1 100%;
+        order: -1;
+
+        .search-form { width: 100%; }
+        .sbox {
+          width: 100%;
+          &:focus { width: 100%; }
+        }
+      }
+    }
+
+    &__right--btn {
+      font-size: 12px;
+      padding: 6px 12px;
+      margin-left: 0;
+      &:last-child { margin-left: 0; }
+    }
+  }
+
+  // --- Hero ---
+  .hero-banner {
+    height: 70vh;
+    min-height: 420px;
+
+    &__content { padding: 0 16px; max-width: 100%; }
+    &__description { font-size: 15px; max-width: 100%; }
+  }
+
+  // --- 詳細ページ: ポスターと詳細を縦積み ---
+  .show-content {
+    flex-direction: column;
+    gap: 24px;
+    margin-top: -80px;
+  }
+  .show-poster {
+    flex: 0 0 auto;
+    max-width: 220px;
+    margin: 0 auto;
+  }
+  .show-details__title { font-size: 28px; }
+  .show-details__video iframe { height: 220px; }
+
+  // --- グリッド: 列を詰める ---
+  .grid-page .grid-container,
+  .rank-page .grid-container,
+  .profile-section__grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+
+  // --- 横スクロール行: タッチはスワイプ操作なので矢印は隠す ---
+  .movie-row__arrow { display: none; }
+
+  // --- フォーム ---
+  .container { padding: 24px 18px; }
+}
+
+@media (max-width: 480px) {
+  .header__left .nav-links {
+    gap: 10px;
+    .nav-link { font-size: 12px; }
+  }
+
+  .grid-page .grid-container,
+  .rank-page .grid-container,
+  .profile-section__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .hero-banner__buttons { flex-wrap: wrap; }
+
+  .show-details__meta { font-size: 13px; }
+}

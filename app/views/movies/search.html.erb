@@ -1,7 +1,8 @@
 <div class="grid-page">
   <h2 class="grid-page__title">検索結果</h2>
-  <% if @movies.present? %>
-    <div class="grid-container" data-search-target="list">
+  <%# list target は常に描画する。空でもライブ検索(JS)が要素を更新できるようにするため %>
+  <div class="grid-container" data-search-target="list" aria-live="polite">
+    <% if @movies.present? %>
       <% @movies.each do |movie| %>
         <%= link_to movie_path(movie), class: "grid-card" do %>
           <%= image_tag movie.image_url, class: "grid-card__image", alt: movie.title %>
@@ -9,7 +10,7 @@
             <div class="grid-card__title"><%= movie.title %></div>
             <div class="grid-card__meta">
               <span class="likes">
-                <i class="fa fa-heart"></i>
+                <i class="fa fa-heart" aria-hidden="true"></i>
                 <%= movie.likes_total %>
               </span>
               <span class="category"><%= movie.category %></span>
@@ -17,8 +18,8 @@
           </div>
         <% end %>
       <% end %>
-    </div>
-  <% else %>
-    <p class="grid-page__empty">検索結果が見つかりませんでした</p>
-  <% end %>
+    <% else %>
+      <p class="grid-page__empty">検索結果が見つかりませんでした</p>
+    <% end %>
+  </div>
 </div>

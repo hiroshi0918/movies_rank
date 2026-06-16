@@ -14,22 +14,16 @@
     <% end %>
     <div class="show-poster__like">
       <% if user_signed_in? %>
-        <% if current_user.already_liked?(@movie) %>
-          <%= link_to movie_like_path(@movie), class: "like-btn", data: { turbo_method: :delete } do %>
-            <i class="fas fa-thumbs-up"></i>
-            いいね！ <%= @movie.likes_total %>
-          <% end %>
-        <% else %>
-          <%= link_to movie_like_path(@movie), class: "like-btn", data: { turbo_method: :post } do %>
-            <i class="fas fa-thumbs-up"></i>
-            いいね！ <%= @movie.likes_total %>
-          <% end %>
+        <% liked = current_user.already_liked?(@movie) %>
+        <%= link_to movie_like_path(@movie), class: "like-btn#{' is-liked' if liked}", data: { turbo_method: (liked ? :delete : :post) } do %>
+          <i class="fas fa-thumbs-up" aria-hidden="true"></i>
+          いいね！ <%= @movie.likes_total %>
         <% end %>
       <% else %>
-        <div class="like-btn">
-          <i class="fas fa-thumbs-up"></i>
+        <%= link_to new_user_session_path, class: "like-btn", "aria-label": "いいねするにはログイン" do %>
+          <i class="fas fa-thumbs-up" aria-hidden="true"></i>
           いいね！ <%= @movie.likes_total %>
-        </div>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -37,7 +31,7 @@
   <div class="show-details">
     <h1 class="show-details__title"><%= @movie.title %></h1>
     <div class="show-details__meta">
-      <span class="show-details__match">98% マッチ</span>
+      <span class="show-details__match"><i class="fa fa-heart" aria-hidden="true"></i> <%= @movie.likes_total %></span>
       <span class="show-details__tag"><%= @movie.category %></span>
       <span class="show-details__label">
         監督:
@@ -74,15 +68,18 @@
       </p>
     <% end %>
   </div>
-  <div class="comments-list" data-comment-target="list">
+  <div class="comments-list" data-comment-target="list" aria-live="polite">
     <h3 class="comments-list__title">レビュー一覧</h3>
-    <% if @comments %>
+    <% if @comments.any? %>
       <% @comments.each do |comment| %>
         <div class="comment-item">
           <div class="comment-item__user"><%= comment.user.nickname %></div>
           <div class="comment-item__text"><%= comment.text %></div>
+          <div class="comment-item__date"><%= comment.created_at.strftime("%Y/%m/%d %H:%M") if comment.created_at %></div>
         </div>
       <% end %>
+    <% else %>
+      <p class="comments-list__empty" data-comment-target="empty">まだレビューがありません。最初のレビューを投稿しましょう。</p>
     <% end %>
   </div>
 </div>

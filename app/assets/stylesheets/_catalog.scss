@@ -1,0 +1,109 @@
+// ============================
+// Catalog page — 絞り込み・並び替え・ページネーション
+// ============================
+.catalog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-end;
+  margin: 0 0 28px;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--nf-white-muted);
+  }
+
+  &__select {
+    appearance: none;
+    background: var(--nf-dark-card);
+    color: var(--nf-white);
+    border: 1px solid var(--nf-glass-border);
+    border-radius: var(--nf-radius);
+    padding: 10px 36px 10px 14px;
+    font-size: 14px;
+    font-family: var(--nf-font);
+    cursor: pointer;
+    min-width: 180px;
+    // 右側にシェブロンを描画
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a3a3a3' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    transition: border-color var(--nf-transition-fast);
+
+    &:hover { border-color: var(--nf-gray-light); }
+    &:focus { border-color: var(--nf-red); }
+  }
+
+  &__apply {
+    background: var(--nf-red);
+    color: var(--nf-white);
+    border: none;
+    border-radius: var(--nf-radius);
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.catalog-pagination {
+  margin: 40px 0 20px;
+  display: flex;
+  justify-content: center;
+
+  .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    a, span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 40px;
+      padding: 0 12px;
+      border-radius: var(--nf-radius);
+      background: var(--nf-dark-card);
+      color: var(--nf-white-soft);
+      text-decoration: none;
+      font-size: 14px;
+      border: 1px solid var(--nf-glass-border);
+      transition: background var(--nf-transition-fast), color var(--nf-transition-fast);
+    }
+
+    a:hover { background: var(--nf-gray); }
+
+    .current span,
+    .current {
+      background: var(--nf-red);
+      color: var(--nf-white);
+      border-color: var(--nf-red);
+      font-weight: 700;
+    }
+
+    .disabled span {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .catalog-filters {
+    gap: 12px;
+    &__select { min-width: 0; flex: 1; }
+    &__group { flex: 1 1 45%; }
+  }
+}

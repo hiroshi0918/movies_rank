@@ -19,4 +19,19 @@ class UserTest < ActiveSupport::TestCase
       user.destroy
     end
   end
+
+  test 'requires nickname' do
+    user = User.new(email: 'x@example.com', password: 'password123', nickname: '')
+    assert_not user.valid?
+    assert_includes user.errors[:nickname], "can't be blank"
+  end
+
+  test 'destroying user cascades to its movies' do
+    user = users(:one)
+    movies_count = user.movies.count
+    assert movies_count.positive?
+    assert_difference('Movie.count', -movies_count) do
+      user.destroy
+    end
+  end
 end

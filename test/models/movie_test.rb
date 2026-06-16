@@ -23,7 +23,26 @@ class MovieTest < ActiveSupport::TestCase
   test 'search by title' do
     assert_includes Movie.search('Inception'), movies(:one)
     assert_not_includes Movie.search('Inception'), movies(:two)
-    assert_equal Movie.count, Movie.search('').count
+  end
+
+  test 'search returns none for blank keyword' do
+    # 空キーワードで全件を返すと検索ページが全件ロードになるため、0件を返す仕様。
+    assert_equal 0, Movie.search('').count
+    assert_equal 0, Movie.search(nil).count
+  end
+
+  test 'image presence accepts legacy string url without attachment' do
+    # シード投入済み映画は文字列カラムにURLを持つだけで添付が無い。
+    # この状態でも有効(=画像を再アップロードせずに編集できる)であることを担保する。
+    movie = Movie.new(title: 'T', director: 'D', category: 'C', user: users(:one))
+    movie[:image] = 'https://example.com/poster.jpg' # レガシー文字列カラム(seedと同等)
+    assert movie.valid?, movie.errors.full_messages.to_sentence
+  end
+
+  test 'image presence rejects when neither attachment nor string url' do
+    movie = Movie.new(title: 'T', director: 'D', category: 'C', user: users(:one))
+    assert_not movie.valid?
+    assert_includes movie.errors[:image], "can't be blank"
   end
 
   test 'create_all_ranks orders by likes_count' do

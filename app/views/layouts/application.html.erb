@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
     <title>MoviesRank</title>
@@ -12,26 +12,30 @@
     <%= turbo_include_tags %>
     <%= javascript_importmap_tags %>
   </head>
-  <body>
+  <body data-controller="search">
     <div class="header" data-controller="header">
       <div class="header__left">
         <%= link_to "MoviesRank", root_path, class: "title" %>
-        <nav class="nav-links" aria-label="主要メニュー">
+        <nav class="nav-links" aria-label="メインナビゲーション">
           <%= link_to "ホーム", root_path, class: "nav-link" %>
+          <%= link_to "映画一覧", catalog_movies_path, class: "nav-link" %>
           <%= link_to "ランキング", rank_movies_path, class: "nav-link" %>
           <% if user_signed_in? %>
-            <%= link_to "マイページ", user_path(current_user), class: "nav-link" %>
+            <%= link_to "マイリスト", user_path(current_user), class: "nav-link" %>
           <% end %>
         </nav>
       </div>
       <div class="header__right">
         <div class="search-container">
-          <%= form_with(url: search_movies_path, local: true, method: :get, class: "search-form") do |form| %>
-            <%= form.text_field :keyword, value: params[:keyword], placeholder: "映画タイトルで検索", class: "sbox" %>
-            <%= form.submit "検索", class: "sbtn" %>
+          <%= form_with(url: search_movies_path, local: true, method: :get, class: "search-form", data: { action: "submit->search#performSearch" }) do |form| %>
+            <%= form.text_field :keyword, placeholder: "映画を検索する", class: "sbox", "aria-label": "映画を検索する", data: { search_target: "input", action: "keyup->search#performSearch" } %>
+            <button class="sbtn" type="submit" aria-label="検索">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
           <% end %>
         </div>
         <% if user_signed_in? %>
+          <%= link_to current_user.nickname, user_path(current_user), class: "header__right--btn" %>
           <%= link_to "新規投稿", new_movie_path, class: "header__right--btn" %>
           <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "header__right--btn" %>
         <% else %>

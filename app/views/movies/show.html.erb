@@ -1,72 +1,61 @@
-<div class="detail-page">
-  <div class="detail-layout">
-    <div class="detail-poster">
-      <%= movie_poster_tag(@movie, class_name: "detail-poster__image", alt: @movie.title) %>
+<div class="show-backdrop" style="background-image: url('<%= @movie.image_url %>')">
+  <div class="show-backdrop__image" style="background-image: url('<%= @movie.image_url %>')"></div>
+  <div class="show-backdrop__gradient"></div>
+</div>
 
-      <% if user_signed_in? && current_user == @movie.user %>
-        <div class="detail-poster__actions">
-          <%= link_to "編集", edit_movie_path(@movie.id), class: "detail-button detail-button--secondary" %>
-          <%= link_to "削除", movie_path(@movie.id), class: "detail-button detail-button--danger", data: { turbo_method: :delete, turbo_confirm: "この投稿を削除しますか？" } %>
-        </div>
-      <% end %>
-
-      <div class="detail-poster__like">
-        <% if user_signed_in? %>
-          <% if current_user.already_liked?(@movie) %>
-            <%= link_to movie_like_path(@movie), class: "detail-button detail-button--like", data: { turbo_method: :delete } do %>
-              <span>いいねを解除</span>
-              <span><%= movie_likes_text(@movie) %></span>
-            <% end %>
-          <% else %>
-            <%= link_to movie_like_path(@movie), class: "detail-button detail-button--like", data: { turbo_method: :post } do %>
-              <span>いいねする</span>
-              <span><%= movie_likes_text(@movie) %></span>
-            <% end %>
-          <% end %>
-        <% else %>
-          <div class="detail-button detail-button--static">
-            <span>いいね数</span>
-            <span><%= movie_likes_text(@movie) %></span>
-          </div>
+<div class="show-content">
+  <div class="show-poster">
+    <%= image_tag @movie.image_url, class: "show-poster__image", alt: @movie.title, loading: "lazy" %>
+    <% if user_signed_in? && current_user == @movie.user %>
+      <div class="show-poster__actions">
+        <%= link_to "編集", edit_movie_path(@movie.id), class: "btn-edit" %>
+        <%= link_to "削除", movie_path(@movie.id), class: "btn-delete", data: { turbo_method: :delete, turbo_confirm: "この投稿を削除しますか？" } %>
+      </div>
+    <% end %>
+    <div class="show-poster__like">
+      <% if user_signed_in? %>
+        <% liked = current_user.already_liked?(@movie) %>
+        <%= link_to movie_like_path(@movie), class: "like-btn#{' is-liked' if liked}", data: { turbo_method: (liked ? :delete : :post) } do %>
+          <i class="fas fa-thumbs-up" aria-hidden="true"></i>
+          いいね！ <%= @movie.likes_total %>
         <% end %>
-      </div>
-    </div>
-
-    <div class="detail-body">
-      <p class="detail-body__eyebrow">作品詳細</p>
-      <h1 class="detail-body__title"><%= @movie.title %></h1>
-      <% if movie_original_title_text(@movie).present? %>
-        <p class="detail-body__original-title">原題: <%= movie_original_title_text(@movie) %></p>
-      <% end %>
-      <div class="detail-body__meta">
-        <span class="detail-body__tag"><%= @movie.category %></span>
-        <span class="detail-body__meta-item">監督 <strong><%= @movie.director %></strong></span>
-        <span class="detail-body__meta-item"><%= movie_likes_text(@movie) %></span>
-      </div>
-
-      <% if @movie.detail.present? %>
-        <section class="detail-section">
-          <h2 class="detail-section__title">あらすじ</h2>
-          <div class="detail-section__text"><%= simple_format(@movie.detail) %></div>
-        </section>
-      <% end %>
-
-      <% if @movie.youtube_url.present? %>
-        <section class="detail-section detail-section--trailer">
-          <div class="detail-video-card">
-            <div class="detail-section__header detail-video-card__header">
-              <h2 class="detail-section__title">予告編</h2>
-              <%= link_to "YouTubeで開く", "https://www.youtube.com/watch?v=#{@movie.youtube_url}", target: "_blank", rel: "noopener", class: "detail-section__link" %>
-            </div>
-            <div class="detail-video-card__body">
-              <div class="detail-video">
-                <iframe src="https://www.youtube.com/embed/<%= @movie.youtube_url %>" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="予告編"></iframe>
-              </div>
-            </div>
-          </div>
-        </section>
+      <% else %>
+        <%= link_to new_user_session_path, class: "like-btn", "aria-label": "いいねするにはログイン" do %>
+          <i class="fas fa-thumbs-up" aria-hidden="true"></i>
+          いいね！ <%= @movie.likes_total %>
+        <% end %>
       <% end %>
     </div>
+  </div>
+
+  <div class="show-details">
+    <h1 class="show-details__title"><%= @movie.title %></h1>
+    <% if @movie.original_title.present? && @movie.original_title != @movie.title %>
+      <p class="show-details__original-title">原題: <%= @movie.original_title %></p>
+    <% end %>
+    <div class="show-details__meta">
+      <span class="show-details__match"><i class="fa fa-heart" aria-hidden="true"></i> <%= @movie.likes_total %></span>
+      <span class="show-details__tag"><%= @movie.category %></span>
+      <span class="show-details__label">
+        監督:
+        <strong><%= @movie.director %></strong>
+      </span>
+    </div>
+    <% if @movie.detail.present? %>
+      <div class="show-details__section">
+        <h3 class="show-details__section-title">あらすじ</h3>
+        <p class="show-details__text"><%= @movie.detail %></p>
+      </div>
+    <% end %>
+    <% if @movie.youtube_url.present? %>
+      <div class="show-details__section show-details__video">
+        <div class="show-details__video-head">
+          <h3 class="show-details__section-title">予告編</h3>
+          <%= link_to "YouTubeで開く", "https://www.youtube.com/watch?v=#{@movie.youtube_url}", target: "_blank", rel: "noopener", class: "show-details__video-link" %>
+        </div>
+        <iframe width="100%" height="400" src="https://www.youtube.com/embed/<%= @movie.youtube_url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true" title="予告編"></iframe>
+      </div>
+    <% end %>
   </div>
 </div>
 
@@ -81,22 +70,23 @@
     <% else %>
       <p class="comment-form__notice">
         コメントの投稿には
-        <%= link_to "ログイン", new_user_session_path, class: "comment-form__link" %>
+        <%= link_to "ログイン", new_user_session_path, style: "color: var(--nf-red); font-weight: 600;" %>
         が必要です
       </p>
     <% end %>
   </div>
-  <div class="comments-list" data-comment-target="list">
+  <div class="comments-list" data-comment-target="list" aria-live="polite">
     <h3 class="comments-list__title">レビュー一覧</h3>
-    <% if @comments.present? %>
+    <% if @comments.any? %>
       <% @comments.each do |comment| %>
         <div class="comment-item">
           <div class="comment-item__user"><%= comment.user.nickname %></div>
           <div class="comment-item__text"><%= comment.text %></div>
+          <div class="comment-item__date"><%= comment.created_at.strftime("%Y/%m/%d %H:%M") if comment.created_at %></div>
         </div>
       <% end %>
     <% else %>
-      <p class="comments-list__empty">まだレビューはありません</p>
+      <p class="comments-list__empty" data-comment-target="empty">まだレビューがありません。最初のレビューを投稿しましょう。</p>
     <% end %>
   </div>
 </div>

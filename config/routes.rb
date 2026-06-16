@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   resources :movies, except: :index do
     resources :comments, only: :create
     resource :like, only: [:create, :destroy]
-    collection do 
+    collection do
+      get 'catalog'
       get 'search'
       get 'rank'
     end

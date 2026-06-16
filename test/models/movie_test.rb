@@ -24,7 +24,26 @@ class MovieTest < ActiveSupport::TestCase
     assert_includes Movie.search('インセプション'), movies(:one)
     assert_includes Movie.search('Inception'), movies(:one)
     assert_not_includes Movie.search('Inception'), movies(:two)
-    assert_equal Movie.count, Movie.search('').count
+  end
+
+  test 'search returns none for blank keyword' do
+    # 空キーワードで全件を返すと検索ページが全件ロードになるため、0件を返す仕様。
+    assert_equal 0, Movie.search('').count
+    assert_equal 0, Movie.search(nil).count
+  end
+
+  test 'image presence accepts external url without attachment' do
+    # 取込/シード済み映画は poster_source_url にURLを持つだけで添付が無い。
+    # この状態でも有効(=画像を再アップロードせずに編集できる)であることを担保する。
+    movie = Movie.new(title: 'T', director: 'D', category: 'C', user: users(:one))
+    movie.poster_source_url = 'https://example.com/poster.jpg'
+    assert movie.valid?, movie.errors.full_messages.to_sentence
+  end
+
+  test 'image presence rejects when neither attachment nor string url' do
+    movie = Movie.new(title: 'T', director: 'D', category: 'C', user: users(:one))
+    assert_not movie.valid?
+    assert_includes movie.errors[:image], "can't be blank"
   end
 
   test 'create_all_ranks orders by likes_count' do

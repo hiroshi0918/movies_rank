@@ -43,7 +43,10 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  # 認証Cookie/CSRFトークンの平文送信を防ぐためSSLを強制する。
+  # リバースプロキシ/ロードバランサでTLS終端する構成では、ENV["ASSUME_SSL"]=1 で assume_ssl を有効化する。
+  config.force_ssl = true
+  config.assume_ssl = ENV["ASSUME_SSL"].present?
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.

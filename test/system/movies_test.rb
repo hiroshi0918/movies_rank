@@ -10,18 +10,15 @@ class MoviesTest < ApplicationSystemTestCase
     visit root_url
 
     assert_selector "a.title", text: /MoviesRank/i
-    assert_selector "h1", text: "新着の映画"
-    assert_no_text "今日のTOP10（日本）"
-    assert_no_text "視聴中コンテンツ"
+    # Netflix風ホーム: 横スクロール行とカード。死リンク・偽データが無いこと。
+    assert_selector ".movie-card", minimum: 1
+    assert_no_text "98% マッチ"
   end
 
-  test "searching for a movie" do
-    visit root_url
-    fill_in "keyword", with: "Inception"
-    click_button "検索"
+  test "searching for a movie by original title" do
+    visit search_movies_path(keyword: "Inception")
 
-    assert_current_path search_movies_path, ignore_query: true
-    assert_selector ".movie-card__title", text: /インセプション/i, visible: :all
+    assert_selector ".grid-card__title", text: /インセプション/i, visible: :all
   end
 
   test "viewing movie details and trailer" do
@@ -34,9 +31,9 @@ class MoviesTest < ApplicationSystemTestCase
 
     visit movie_path(@movie)
 
-    assert_selector "h1", text: @movie.title
+    assert_selector ".show-details__title", text: @movie.title
     assert_text "原題: #{@movie.original_title}"
-    assert_selector ".detail-video-card"
+    assert_selector ".show-details__video"
     assert_selector "iframe[title='予告編']"
     assert_link "YouTubeで開く"
   end

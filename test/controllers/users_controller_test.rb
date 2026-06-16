@@ -23,4 +23,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     assert_select '#error_explanation'
   end
+
+  test 'shows user profile with posts and liked movies' do
+    user = users(:one)
+    get user_path(user)
+
+    assert_response :success
+    assert_select '.profile-header__name', user.nickname
+  end
 end

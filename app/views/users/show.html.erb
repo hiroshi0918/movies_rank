@@ -1,6 +1,6 @@
 <div class="profile-page">
   <div class="profile-header">
-    <div class="profile-header__avatar"><%= @user.nickname[0] %></div>
+    <div class="profile-header__avatar"><%= @user.nickname.to_s.first || "?" %></div>
     <div class="profile-header__info">
       <h1 class="profile-header__name"><%= @user.nickname %></h1>
       <p class="profile-header__sub">メンバー</p>
@@ -30,9 +30,9 @@
 
   <div class="profile-section">
     <h2 class="profile-section__title">いいねした映画</h2>
-    <% if @user.liked_movies.present? %>
+    <% if @liked_movies.present? %>
       <div class="profile-section__grid">
-        <% @user.liked_movies.each do |movie| %>
+        <% @liked_movies.each do |movie| %>
           <%= link_to movie_path(movie), class: "profile-movie-card" do %>
             <%= movie_poster_tag(movie, class_name: "profile-movie-card__image", alt: movie.title) %>
             <div class="profile-movie-card__overlay">

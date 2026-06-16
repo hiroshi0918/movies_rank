@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_24_013000) do
-  create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
+ActiveRecord::Schema[8.1].define(version: 2026_06_14_024027) do
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.string "name", null: false
@@ -21,35 +21,35 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_24_013000) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb3", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.string "content_type"
     t.datetime "created_at", null: false
     t.string "filename", null: false
     t.string "key", null: false
-    t.text "metadata"
+    t.text "metadata", size: :medium
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb3", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "comments", charset: "utf8mb3", force: :cascade do |t|
+  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.bigint "movie_id", null: false
-    t.text "text", null: false
+    t.text "text", size: :medium, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.bigint "user_id", null: false
     t.index ["movie_id"], name: "index_comments_on_movie_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "likes", charset: "utf8mb3", force: :cascade do |t|
+  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.bigint "movie_id", null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -59,10 +59,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_24_013000) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
-  create_table "movies", charset: "utf8mb3", force: :cascade do |t|
+  create_table "movies", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "category", null: false
     t.datetime "created_at", precision: nil, null: false
-    t.text "detail"
+    t.text "detail", size: :medium
     t.string "director", null: false
     t.integer "likes_count", default: 0, null: false
     t.string "original_title"
@@ -74,7 +74,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_24_013000) do
     t.index ["user_id"], name: "index_movies_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb3", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false

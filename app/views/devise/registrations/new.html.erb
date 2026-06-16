@@ -7,7 +7,7 @@
 
       <div class="field">
         <%= f.label :nickname, "ニックネーム" %>
-        <%= f.text_field :nickname, autofocus: true, placeholder: "表示名を入力" %>
+        <%= f.text_field :nickname, autofocus: true, required: true, maxlength: 50, placeholder: "表示名を入力" %>
       </div>
 
       <div class="field">
